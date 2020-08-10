@@ -16,6 +16,9 @@
 
 typedef struct association_request_management_frame  ASSOCIATION_REQUEST_MANAGEMENT_FRAME;
 typedef struct authentication_management_frame       AUTH_MANAGEMENT_FRAME;
+
+typedef time_t TIME;
+
 size_t
 build_radio_tap_header(rt_header)
 	void *rt_header
@@ -61,56 +64,82 @@ build_dot1X_header(type, payload_len, length)
 	size_t *length
 
 void *
-build_eap_header(uint8_t id, uint8_t code, uint8_t type, uint16_t payload_len, size_t *len)
+build_eap_header(id, code, type, payload_len, length)
+	uint8_t id
+	uint8_t code
+	uint8_t type
+	uint16_t payload_len
+	size_t *length
+	
+void *
+build_eapol_start_packet(length)
+	size_t *length
+	
+void *
+build_eap_packet(payload, payload_length, length)
+	const void *payload
+	uint16_t payload_length
+	size_t *length
+	
+void *
+build_eap_failure_packet(length)
+	size_t *length
 void
- *build_eapol_start_packet(size_t *len)
+crack()
+	
 void
- *build_eap_packet(const void
- *payload, uint16_t payload_len, size_t *len)
-void
- *build_eap_failure_packet(size_t *len)
+advance_pin_count()
 
 void
- crack()
+display_status(pin_count, start_time)
+	float pin_count
+	TIME_T start_time
 void
- advance_pin_count()
-void
- display_status(float pin_count, time_t start_time)
+pixie_format(key, length, outbuf)
+	const unsigned char *key
+	unsigned length
+	char *outbuf
 
 void
- pixie_format(const unsigned char *key, unsigned len, char *outbuf)
-void
- pixie_attack(void
-)
+pixie_attack(void)
 
 
-char
- *build_wps_pin()
-char
- *build_next_pin()
+char * 
+build_wps_pin()
+
+char *
+build_next_pin()
+
 void
- generate_pins()
+generate_pins()
 
 int
- send_eapol_start()
+send_eapol_start()
+
 int
- send_identity_response()
+send_identity_response()
+
 int
- send_msg(int
- type)
+send_msg(type)
+	int type
 void
- send_termination()
+send_termination()
+
 void
- send_wsc_nack()
+send_wsc_nack()
 
 
 int
- resend_last_packet(void)
+resend_last_packet(void)
+	void void
 int
- send_packet_int
-ernal(const char* callerfunc, const char* file, int
- callerline, 
-const void *packet, size_t len, int use_timer)
+send_packet_internal(callerfunc, file, callerline, packet, length, use_timer)
+	const char* callerfunc
+	const char* file
+	int callerline
+	const void *packet
+	size_t length
+	int use_timer
 
 struct wps_registrar *
 wps_registrar_init(struct wps_context *wps,

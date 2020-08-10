@@ -14,12 +14,13 @@
 #include "C/src/cracker.h"
 #include "C/src/builder.h"
 
-typedef struct association_request_management_frame  ASSOCIATION_REQUEST_MANAGEMENT_FRAME;
-typedef struct authentication_management_frame       AUTH_MANAGEMENT_FRAME;
-typedef struct wpa_buf                               WPA_BUF;
-typedef struct wps_registrar                         WPS_REGISTRAR;
-typedef struct wps_registrar_config                  WPS_REGISTRAR_CONFIG;
-typedef struct wps_context                           WPS_CONTEXT;
+typedef struct association_request_management_frame  *ASSOCIATION_REQUEST_MANAGEMENT_FRAME;
+typedef struct authentication_management_frame       *AUTH_MANAGEMENT_FRAME;
+typedef struct wpa_buf                               *WPA_BUF;
+typedef struct wps_registrar                         *WPS_REGISTRAR;
+typedef struct wps_registrar_config                  *WPS_REGISTRAR_CONFIG;
+typedef struct wps_context                           *WPS_CONTEXT;
+typedef struct wps_parse_attr                        *WPS_PARSE_ATTR;
 
 typedef time_t TIME;
 
@@ -183,16 +184,30 @@ int
 wps_registrar_get_info(struct wps_registrar *reg, const u8 *addr,
 			   char *buf, size_t buflen)
 
-unsigned int wps_pin_checksum(unsigned int pin)
-unsigned int wps_pin_valid(unsigned int pin)
-unsigned int wps_generate_pin(void)
+unsigned int 
+wps_pin_checksum(pin)
+	unsigned int pin
+	
+unsigned int 
+wps_pin_valid(pin)
+	unsigned int pin
+	
+unsigned int 
+wps_generate_pin(void)
+
 void
  wps_free_pending_msgs(struct upnp_pending_message *msgs)
 
-struct oob_device_data * wps_get_oob_device(char *device_type)
-struct oob_nfc_device_data * wps_get_oob_nfc_device(char *device_name)
+struct oob_device_data *
+wps_get_oob_device(char *device_type)
+
+struct oob_nfc_device_data *
+wps_get_oob_nfc_device(char *device_name)
+
 int
- wps_get_oob_method(char *method)
+ wps_get_oob_method(method)
+	char *method
+	
 int
  wps_process_oob(struct wps_context *wps, struct oob_device_data *oob_dev,
 		    int registrar)
@@ -216,34 +231,43 @@ void
  wps_kdf(const u8 *key, const u8 *label_prefix, size_t label_prefix_len,
 	     const char *label, u8 *res, size_t res_len)
 int
- wps_derive_keys(struct wps_data *wps)
+wps_derive_keys(struct wps_data *wps)
+
 void
- wps_derive_psk(struct wps_data *wps, const u8 *dev_passwd,
+wps_derive_psk(struct wps_data *wps, const u8 *dev_passwd,
 		    size_t dev_passwd_len)
 struct wpabuf * wps_decrypt_encr_settings(struct wps_data *wps, const u8 *encr,
 					  size_t encr_len)
 void
- wps_fail_event(struct wps_context *wps, enum wps_msg_type msg)
+wps_fail_event(struct wps_context *wps, enum wps_msg_type msg)
+
 void
- wps_success_event(struct wps_context *wps)
+wps_success_event(struct wps_context *wps)
+
 void
- wps_pwd_auth_fail_event(struct wps_context *wps, int enrollee, int part)
+wps_pwd_auth_fail_event(struct wps_context *wps, int enrollee, int part)
+
 void
- wps_pbc_overlap_event(struct wps_context *wps)
+wps_pbc_overlap_event(struct wps_context *wps)
+
 void
- wps_pbc_timeout_event(struct wps_context *wps)
+wps_pbc_timeout_event(struct wps_context *wps)
 
 extern struct oob_device_data oob_ufd_device_data
 extern struct oob_device_data oob_nfc_device_data
 extern struct oob_nfc_device_data oob_nfc_pn531_device_data
 
-/* wps_attr_parse.c */
 int
- wps_parse_msg(const struct wpabuf *msg, struct wps_parse_attr *attr)
+wps_parse_msg(msg, attr)
+	const WPABUF *msg
+	WPS_PARSE_ATTR *attr
+	
+	
+	
 
-/* wps_attr_build.c */
 int
- wps_build_public_key(struct wps_data *wps, struct wpabuf *msg)
+wps_build_public_key(struct wps_data *wps, struct wpabuf *msg)
+
 int
  wps_build_req_type(struct wpabuf *msg, enum wps_request_type type)
 int

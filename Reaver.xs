@@ -16,6 +16,7 @@
 
 typedef struct association_request_management_frame  ASSOCIATION_REQUEST_MANAGEMENT_FRAME;
 typedef struct authentication_management_frame       AUTH_MANAGEMENT_FRAME;
+typedef struct wpa_buf                               WPA_BUF;
 typedef struct wps_registrar                         WPS_REGISTRAR;
 typedef struct wps_registrar_config                  WPS_REGISTRAR_CONFIG;
 typedef struct wps_context                           WPS_CONTEXT;
@@ -171,8 +172,10 @@ wps_registrar_button_pushed(reg)
 	WPS_REGISTRAR *reg
 	
 void
-wps_registrar_probe_req_rx(struct wps_registrar *reg, const u8 *addr, const struct wpabuf *wps_data)
-
+wps_registrar_probe_req_rx(reg,addr, wps_data)
+	WPS_REGISTRAR *reg
+	const u8 *addr
+	WPA_BUF *wps_data
 int
 wps_registrar_update_ie(struct wps_registrar *reg)
 

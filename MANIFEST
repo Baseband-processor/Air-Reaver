@@ -1,0 +1,13 @@
+Changes
+lib/Air/Crack.pm
+t/test-consts.t
+t/test-device-init.t
+t/test-use.t
+Crack.xs
+Makefile.PL
+MANIFEST
+README
+TODO
+typemap
+META.yml                                 Module YAML meta-data (added by MakeMaker)
+META.json                                Module JSON meta-data (added by MakeMaker)

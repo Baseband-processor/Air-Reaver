@@ -1,5 +1,14 @@
 TYPEMAP
 
+ASSOCIATION_REQUEST_MANAGEMENT_FRAME * T_PTRREF
+AUTH_MANAGEMENT_FRAME *                T_PTRREF
+WPA_BUF *                              T_PTRREF
+WPS_REGISTRAR *                        T_PTRREF
+WPS_REGISTRAR_CONFIG *                 T_PTRREF
+WPS_CONTEXT *                          T_PTRREF
+WPS_PARSE_ATTR *                       T_PTRREF
+TIME                                   T_PTRREF
+
 const u8 *          T_PV
 const char *        T_PV
 const u_char *      T_PV

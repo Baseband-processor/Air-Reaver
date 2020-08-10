@@ -16,6 +16,9 @@
 
 typedef struct association_request_management_frame  ASSOCIATION_REQUEST_MANAGEMENT_FRAME;
 typedef struct authentication_management_frame       AUTH_MANAGEMENT_FRAME;
+typedef struct wps_registrar                         WPS_REGISTRAR;
+typedef struct wps_registrar_config                  WPS_REGISTRAR_CONFIG;
+typedef struct wps_context                           WPS_CONTEXT;
 
 typedef time_t TIME;
 
@@ -141,27 +144,40 @@ send_packet_internal(callerfunc, file, callerline, packet, length, use_timer)
 	size_t length
 	int use_timer
 
-struct wps_registrar *
-wps_registrar_init(struct wps_context *wps,
-		   const struct wps_registrar_config *cfg)
+WPS_REGISTRAR *
+wps_registrar_init(wps, cfg)
+	WPS_CONTEXT *wps
+	const WPS_REGISTRAR_CONFIG *cfg
 void
- wps_registrar_deinit(struct wps_registrar *reg)
+wps_registrar_deinit(reg)
+	WPS_REGISTRAR *reg
 int
- wps_registrar_add_pin(struct wps_registrar *reg, const u8 *uuid,
-			  const u8 *pin, size_t pin_len, int timeout)
+wps_registrar_add_pin(reg, uuid, pin, pin_len, timeout)
+	WPS_REGISTRAR  *reg
+	const u8 *uuid
+	const u8 *pin
+	size_t pin_len
+	int timeout
 int
- wps_registrar_invalidate_pin(struct wps_registrar *reg, const u8 *uuid)
+wps_registrar_invalidate_pin(reg, uuid)
+	WPS_REGISTRAR *reg
+	const u8 *uuid
 int
- wps_registrar_unlock_pin(struct wps_registrar *reg, const u8 *uuid)
+wps_registrar_unlock_pin(reg, uuid)
+	WPS_REGISTRAR *reg
+	const u8 *uuid
 int
- wps_registrar_button_pushed(struct wps_registrar *reg)
+wps_registrar_button_pushed(reg)
+	WPS_REGISTRAR *reg
+	
 void
- wps_registrar_probe_req_rx(struct wps_registrar *reg, const u8 *addr,
-				const struct wpabuf *wps_data)
+wps_registrar_probe_req_rx(struct wps_registrar *reg, const u8 *addr, const struct wpabuf *wps_data)
+
 int
- wps_registrar_update_ie(struct wps_registrar *reg)
+wps_registrar_update_ie(struct wps_registrar *reg)
+
 int
- wps_registrar_get_info(struct wps_registrar *reg, const u8 *addr,
+wps_registrar_get_info(struct wps_registrar *reg, const u8 *addr,
 			   char *buf, size_t buflen)
 
 unsigned int wps_pin_checksum(unsigned int pin)

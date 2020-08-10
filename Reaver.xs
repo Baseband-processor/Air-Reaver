@@ -234,25 +234,26 @@ int
 wps_derive_keys(struct wps_data *wps)
 
 void
-wps_derive_psk(struct wps_data *wps, const u8 *dev_passwd,
-		    size_t dev_passwd_len)
-struct wpabuf * wps_decrypt_encr_settings(struct wps_data *wps, const u8 *encr,
-					  size_t encr_len)
-void
-wps_fail_event(struct wps_context *wps, enum wps_msg_type msg)
+wps_derive_psk(struct wps_data *wps, const u8 *dev_passwd, size_t dev_passwd_len)
+	
+struct wpabuf * wps_decrypt_encr_settings(struct wps_data *wps, const u8 *encr, size_t encr_len)
 
 void
-wps_success_event(struct wps_context *wps)
+wps_success_event(wps)
+	WPS_CONTEXT *wps
 
 void
-wps_pwd_auth_fail_event(struct wps_context *wps, int enrollee, int part)
-
+wps_pwd_auth_fail_event(wps, enrollee,  part)
+	WPS_CONTEXT *wps
+	int enrollee
+	int part
+	
 void
-wps_pbc_overlap_event(struct wps_context *wps)
-
+wps_pbc_overlap_event(wps)
+	WPS_CONTEXT *wps
 void
-wps_pbc_timeout_event(struct wps_context *wps)
-
+wps_pbc_timeout_event(wps)
+	WPS_CONTEXT *wps
 extern struct oob_device_data oob_ufd_device_data
 extern struct oob_device_data oob_nfc_device_data
 extern struct oob_nfc_device_data oob_nfc_pn531_device_data
@@ -261,7 +262,6 @@ int
 wps_parse_msg(msg, attr)
 	const WPABUF *msg
 	WPS_PARSE_ATTR *attr
-	
 	
 	
 
@@ -406,9 +406,7 @@ int
 	       const u8 *rsnie, size_t rsnie_len,
 	       const u8 *ric, size_t ric_len, u8 *mic)
 void
- wpa_derive_pmk_r0(const u8 *xxkey, size_t xxkey_len,
-		       const u8 *ssid, size_t ssid_len,
-		       const u8 *mdid, const u8 *r0kh_id, size_t r0kh_id_len,
+wpa_derive_pmk_r0(const u8 *xxkey, size_t xxkey_len,    const u8 *ssid, size_t ssid_len, const u8 *mdid, const u8 *r0kh_id, size_t r0kh_id_len,
 		       const u8 *s0kh_id, u8 *pmk_r0, u8 *pmk_r0_name)
 void
  wpa_derive_pmk_r1_name(const u8 *pmk_r0_name, const u8 *r1kh_id,

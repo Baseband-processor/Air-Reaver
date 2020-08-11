@@ -532,7 +532,7 @@ enum wps_process_res
 wps_enrollee_process_msg(WPS_DATA *wps,enum wsc_op_code op_code, const WPA_BUF *msg)
 
 WPA_BUF *
-wps_registrar_get_msg(WPS_DATA *wps,enum wsc_op_code *op_code, int type)
+wps_registrar_get_msg(WPS_DATA *wps, enum wsc_op_code *op_code, int type)
 
 int
 wps_build_cred(wps,msg)
@@ -565,13 +565,11 @@ wps_build_device_attrs(dev, msg)
 int
  wps_build_os_version(struct wps_device_data *dev, struct wpabuf *msg)
 int
- wps_build_rf_bands(struct wps_device_data *dev, struct wpabuf *msg)
+ wps_build_rf_bands(struct wps_device_data *dev, WPA_BUF *msg)
 int
- wps_build_primary_dev_type(struct wps_device_data *dev,
-			       struct wpabuf *msg)
+ wps_build_primary_dev_type(struct wps_device_data *dev, WPA_BUF *msg)
 int
- wps_process_device_attrs(struct wps_device_data *dev,
-			     struct wps_parse_attr *attr)
+ wps_process_device_attrs(struct wps_device_data *dev, struct wps_parse_attr *attr)
 int
 wps_process_os_version(struct wps_device_data *dev, const u8 *ver)
 	
@@ -579,8 +577,7 @@ int
 wps_process_rf_bands(struct wps_device_data *dev, const u8 *bands)
 
 void
-wps_device_data_dup(struct wps_device_data *dst,
-			 const struct wps_device_data *src)
+wps_device_data_dup(struct wps_device_data *dst, const struct wps_device_data *src)
 void
 wps_device_data_free(struct wps_device_data *dev)
 
@@ -605,10 +602,7 @@ int
 wpa_eapol_key_mic(const u8 *key, int ver, const u8 *buf, size_t len, u8 *mic)
 	
 void
-wpa_pmk_to_ptk(const u8 *pmk, size_t pmk_len, const char *label,
-		    const u8 *addr1, const u8 *addr2,
-		    const u8 *nonce1, const u8 *nonce2,
-		    u8 *ptk, size_t ptk_len, int use_sha256)
+wpa_pmk_to_ptk(const u8 *pmk, size_t pmk_len, const char *label,const u8 *addr1, const u8 *addr2,const u8 *nonce1, const u8 *nonce2, u8 *ptk, size_t ptk_len, int use_sha256)
 
 int
 wpa_ft_mic(const u8 *kck, const u8 *sta_addr, const u8 *ap_addr, u8 transaction_seqnum, const u8 *mdie, size_t mdie_len, const u8 *ftie, size_t ftie_len, const u8 *rsnie, size_t rsnie_len, const u8 *ric, size_t ric_len, u8 *mic)
@@ -627,7 +621,7 @@ wpa_pmk_r1_to_ptk(const u8 *pmk_r1, const u8 *snonce, const u8 *anonce, const u8
 
 
 int
-wpa_parse_wpa_ie_rsn(const u8 *rsn_ie, size_t rsn_ie_len, struct wpa_ie_data *data)
+wpa_parse_wpa_ie_rsn(const u8 *rsn_ie, size_t rsn_ie_len, WPA_IE_DATA *data)
 
 void
 rsn_pmkid(const u8 *pmk, size_t pmk_len, const u8*aa, const u8 *spa, u8 *pmkid, int use_sha256)

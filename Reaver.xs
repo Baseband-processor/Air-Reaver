@@ -209,7 +209,6 @@ send_termination()
 void
 send_wsc_nack()
 
-
 int
 resend_last_packet(void)
 	void void
@@ -254,12 +253,20 @@ wps_registrar_probe_req_rx(reg,addr, wps_data)
 	const u8 *addr
 	WPA_BUF *wps_data
 int
-wps_registrar_update_ie(struct wps_registrar *reg)
-
+wps_registrar_update_ie(reg)
+	WPS_REGISTRAR *reg
+	
 int
-wps_registrar_get_info(struct wps_registrar *reg, const u8 *addr,
-			   char *buf, size_t buflen)
-
+wps_registrar_get_info(reg, addr, buf, buflen)
+	WPS_REGISTRAR  *reg
+	const u8 *addr
+	char *buf
+	size_t buflen
+	  CODE:
+	     RETVAL = wps_registrar_get_info(&reg, &addr, &buf, buflen);
+	  OUTPUT:
+	     RETVAL
+	     
 unsigned int 
 wps_pin_checksum(pin)
 	unsigned int pin
@@ -330,10 +337,7 @@ wps_pbc_overlap_event(wps)
 void
 wps_pbc_timeout_event(wps)
 	WPS_CONTEXT *wps
-extern struct oob_device_data oob_ufd_device_data
-extern struct oob_device_data oob_nfc_device_data
-extern struct oob_nfc_device_data oob_nfc_pn531_device_data
-
+	
 int
 wps_parse_msg(msg, attr)
 	const WPABUF *msg
@@ -342,7 +346,7 @@ wps_parse_msg(msg, attr)
 	
 
 int
-wps_build_public_key(struct wps_data *wps, struct wpabuf *msg)
+wps_build_public_key(WPS_DATA *wps, WPA_BUF *msg)
 
 int
  wps_build_req_type(struct wpabuf *msg, enum wps_request_type type)
@@ -511,7 +515,7 @@ void
 
 
 int
- wpa_parse_wpa_ie_rsn(const u8 *rsn_ie, size_t rsn_ie_len, struct wpa_ie_data *data)
+wpa_parse_wpa_ie_rsn(const u8 *rsn_ie, size_t rsn_ie_len, struct wpa_ie_data *data)
 
 void
 rsn_pmkid(const u8 *pmk, size_t pmk_len, const u8*aa, const u8 *spa, u8 *pmkid, int use_sha256)

@@ -15,6 +15,7 @@
 #include "C/src/builder.h"
 #include "C/src/wps/wps_registrar.c"
 
+typedef struct wps_context                         *WPS_CONTEXT;
 typedef struct wps_credential                      *WPS_CREDENTIAL;
 
 typedef struct {
@@ -115,7 +116,7 @@ typedef struct wps_registrar                         *WPS_REGISTRAR;
 
 
 typedef struct  {
-	struct wps_context *wps;
+	WPS_CONTEXT *wps;
 	char *key;
 	char *essid;
 	int registrar;

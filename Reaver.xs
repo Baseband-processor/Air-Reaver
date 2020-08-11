@@ -442,107 +442,126 @@ wps_parse_msg(msg, attr)
 	
 
 int
-wps_build_public_key(WPS_DATA *wps, WPA_BUF *msg)
+wps_build_public_key(wps, msg)
+	WPS_DATA *wps
+	WPA_BUF *msg
+int
+wps_build_req_type(WPA_BUF *msg, enum wps_request_type type)
 
 int
-wps_build_req_type(struct wpabuf *msg, enum wps_request_type type)
+wps_build_resp_type(WPA_BUF *msg, enum wps_response_type type)
 
 int
-wps_build_resp_type(struct wpabuf *msg, enum wps_response_type type)
+wps_build_config_methods(msg, methods)
+	WPA_BUF *msg
+	u16 methods
+int
+wps_build_uuid_e(msg, uuid)
+	WPA_BUF *msg
+	const u8 *uuid
+int
+wps_build_dev_password_id(msg, id)
+	WPA_BUF *msg
+	u16 id
+int
+wps_build_config_error(msg, err)
+	WPA_BUF *msg
+	u16 err	
+int
+wps_build_authenticator(wps, msg)
+	WPA_BUF *wps
+	WPA_BUF *msg
+int
+wps_build_key_wrap_auth(wps, msg)	
+	WPS_DATA *wps
+	WPA_BUF *msg
+int
+wps_build_encr_settings(wps, msg, plain)
+	WPS_DATA *wps
+	WPA_BUF *msg
+	WPA_BUF *plain
+int
+wps_build_version(msg)
+	WPA_BUF *msg
+int
+wps_build_msg_type(WPA_BUF *msg, enum wps_msg_type msg_type)
+int
+wps_build_enrollee_nonce(wps, msg)
+	WPS_DATA *wps
+	WPA_BUF *msg
+int	
+wps_build_registrar_nonce(wps, msg)
+	WPS_DATA *wps
+	WPA_BUF *msg
+int
+wps_build_auth_type_flags(wps, msg)
+	WPS_DATA *wps
+	WPA_BUF *msg
+int
+wps_build_encr_type_flags(wps, msg)
+	WPS_DATA *wps
+	WPA_BUF *msg
+int
+wps_build_conn_type_flags(wps, msg)
+	WPS_DATA *wps
+	WPA_BUF *msg
+int
+wps_build_assoc_state(wps, msg)
+	WPS_DATA *wps
+	WPA_BUF *msg
+int
+wps_build_oob_dev_password(msg, wps)
+	WPA_BUF *msg
+	WPS_CONTEXT *wps
+int
+wps_process_authenticator(WPS_DATA *wps, const u8 *authenticator, const WPA_BUF *msg)
 
 int
-wps_build_config_methods(struct wpabuf *msg, u16 methods)
-			
-int
-wps_build_uuid_e(struct wpabuf *msg, const u8 *uuid)
-int
-wps_build_dev_password_id(struct wpabuf *msg, u16 id)
-int
-wps_build_config_error(struct wpabuf *msg, u16 err)
-int
-wps_build_authenticator(struct wps_data *wps, struct wpabuf *msg)
-int
-wps_build_key_wrap_auth(struct wps_data *wps, struct wpabuf *msg)
-int
-wps_build_encr_settings(struct wps_data *wps, struct wpabuf *msg,
-			    struct wpabuf *plain)
-int
- wps_build_version(struct wpabuf *msg)
-int
- wps_build_msg_type(struct wpabuf *msg, enum wps_msg_type msg_type)
-int
- wps_build_enrollee_nonce(struct wps_data *wps, struct wpabuf *msg)
-int
- wps_build_registrar_nonce(struct wps_data *wps, struct wpabuf *msg)
-int
- wps_build_auth_type_flags(struct wps_data *wps, struct wpabuf *msg)
-int
- wps_build_encr_type_flags(struct wps_data *wps, struct wpabuf *msg)
-int
- wps_build_conn_type_flags(struct wps_data *wps, struct wpabuf *msg)
-int
- wps_build_assoc_state(struct wps_data *wps, struct wpabuf *msg)
-int
- wps_build_oob_dev_password(struct wpabuf *msg, struct wps_context *wps)
-
-/* wps_attr_process.c */
-int
- wps_process_authenticator(struct wps_data *wps, const u8 *authenticator,
-			      const struct wpabuf *msg)
-int
- wps_process_key_wrap_auth(struct wps_data *wps, struct wpabuf *msg,
-			      const u8 *key_wrap_auth)
-int
- wps_process_cred(struct wps_parse_attr *attr,
-		     struct wps_credential *cred)
-int
- wps_process_ap_settings(struct wps_parse_attr *attr,
-			    struct wps_credential *cred)
-
-/* wps_enrollee.c */
-struct wpabuf * wps_enrollee_get_msg(struct wps_data *wps,
-				     enum wsc_op_code *op_code)
-enum wps_process_res wps_enrollee_process_msg(struct wps_data *wps,
-					      enum wsc_op_code op_code,
-					      const struct wpabuf *msg)
-
-/* wps_registrar.c */
-struct wpabuf * wps_registrar_get_msg(struct wps_data *wps,
-				      enum wsc_op_code *op_code,
-				      int type)
-enum wps_process_res wps_registrar_process_msg(struct wps_data *wps,
-					       enum wsc_op_code op_code,
-					       const struct wpabuf *msg)
-int
-wps_build_cred(struct wps_data *wps, struct wpabuf *msg)
+wps_process_key_wrap_auth(WPS_DATA *wps, WPA_BUF *msg, const u8 *key_wrap_auth)
 
 int
-wps_device_store(struct wps_registrar *reg,struct wps_device_data *dev, const u8 *uuid)
+wps_process_cred(struct wps_parse_attr *attr, struct wps_credential *cred)
 
-void
-wps_registrar_selected_registrar_changed(struct wps_registrar *reg)
+int
+wps_process_ap_settings(struct wps_parse_attr *attr, struct wps_credential *cred)
+
+WPA_BUF *
+wps_enrollee_get_msg(WPS_DATA *wps, enum wsc_op_code *op_code)
+
+enum wps_process_res
+wps_enrollee_process_msg(WPS_DATA *wps,enum wsc_op_code op_code, const WPA_BUF *msg)
+
+WPA_BUF *
+wps_registrar_get_msg(WPS_DATA *wps,enum wsc_op_code *op_code, int type)
+
+int
+wps_build_cred(wps,msg)
+	WPS_DATA *wps
+	WPA_BUF *msg
+int
+wps_device_store(reg, dev, uuid)
+	WPS_REGISTRER *reg
+	WPS_DEVICE_DATA *dev
+	const u8 *uuid
 	
-int
-wps_er_pbc(struct wps_er *er, const u8 *uuid)
-
-int
-wps_er_learn(struct wps_er *er, const u8 *uuid, const u8 *pin,
-		 size_t pin_len)
-
-int
- wps_dev_type_str2bin(const char *str, u8 dev_type[WPS_DEV_TYPE_LEN])
-char
- * wps_dev_type_bin2str(const u8 dev_type[WPS_DEV_TYPE_LEN], char *buf,
-			    size_t buf_len)
 void
-uuid_gen_mac_addr(const u8 *mac_addr, u8 *uuid)
-
-u16 
-wps_config_methods_str2bin(const char *str)
-
+wps_registrar_selected_registrar_changed(reg)
+	WPS_REGISTRAR *reg
+int
+wps_er_pbc(er, uuid)
+	WPS_ER *er
+	const u8 *uuid
+int
+wps_er_learn(er, uuid, pin,  pin_len)
+	WPS_ER *er
+	const u8 *uuid
+	const u8 *pin
+	size_t pin_len
 
 int
- wps_build_device_attrs(struct wps_device_data *dev, struct wpabuf *msg)
+wps_build_device_attrs(dev, msg)
+	WPS_DEVICE_DATA *dev
+	WPA_BUF *msg
 int
  wps_build_os_version(struct wps_device_data *dev, struct wpabuf *msg)
 int
@@ -593,10 +612,13 @@ wpa_pmk_to_ptk(const u8 *pmk, size_t pmk_len, const char *label,
 
 int
 wpa_ft_mic(const u8 *kck, const u8 *sta_addr, const u8 *ap_addr, u8 transaction_seqnum, const u8 *mdie, size_t mdie_len, const u8 *ftie, size_t ftie_len, const u8 *rsnie, size_t rsnie_len, const u8 *ric, size_t ric_len, u8 *mic)
+
 void
 wpa_derive_pmk_r0(const u8 *xxkey, size_t xxkey_len,    const u8 *ssid, size_t ssid_len, const u8 *mdid, const u8 *r0kh_id, size_t r0kh_id_len, const u8 *s0kh_id, u8 *pmk_r0, u8 *pmk_r0_name)
+
 void
 wpa_derive_pmk_r1_name(const u8 *pmk_r0_name, const u8 *r1kh_id, const u8 *s1kh_id, u8 *pmk_r1_name)
+
 void
 wpa_derive_pmk_r1(const u8 *pmk_r0, const u8 *pmk_r0_name, const u8 *r1kh_id, const u8 *s1kh_id, u8 *pmk_r1, u8 *pmk_r1_name)
 	

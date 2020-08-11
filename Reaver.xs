@@ -552,44 +552,74 @@ wps_build_device_attrs(dev, msg)
 	WPS_DEVICE_DATA *dev
 	WPA_BUF *msg
 int
- wps_build_os_version(WPS_DEVICE_DATA *dev, WPA_BUF *msg)
-int
- wps_build_rf_bands(WPS_DEVICE_DATA *dev, WPA_BUF *msg)
-int
- wps_build_primary_dev_type(WPS_DEVICE_DATA *dev, WPA_BUF *msg)
-int
- wps_process_device_attrs(WPS_DEVICE_DATA *dev, WPS_PARSE_ATTR *attr)
-int
-wps_process_os_version(WPS_DEVICE_DATA *dev, const u8 *ver)
+wps_build_os_version(dev, msg)
+	WPS_DEVICE_DATA *dev
+	WPA_BUF *msg
 	
 int
-wps_process_rf_bands(WPS_DEVICE_DATA *dev, const u8 *bands)
+ wps_build_rf_bands(dev, msg)
+	WPS_DEVICE_DATA *dev
+	WPA_BUF *msg
+	
+int
+wps_build_primary_dev_type(dev, msg)
+	WPS_DEVICE_DATA *dev
+	WPA_BUF *msg
+int
+wps_process_device_attrs(dev, attr)
+	WPS_DEVICE_DATA *dev
+	WPS_PARSE_ATTR *attr
+int
+wps_process_os_version(dev, ver)
+	WPS_DEVICE_DATA *dev
+	const u8 *ver
+	
 
 void
-wps_device_data_dup(WPS_DEVICE_DATA *dst, const WPS_DEVICE_DATA *src)
+wps_device_data_dup(dst, src)
+	WPS_DEVICE_DATA *dst
+	const WPS_DEVICE_DATA *src
+	
 void
-wps_device_data_free(WPS_DEVICE_DATA *dev)
-
+wps_device_data_free(dev)
+	WPS_DEVICE_DATA *dev
+	
 int
 parse_wps_tag(const u_char *tags, size_t len, struct libwps_data *wps)
+	const u_char *tags
+	size_t len
+	struct libwps_data *wps
+	
+unsigned char *
+get_wps_data(data, length, tag_len)
+	const u_char *data
+	size_t length
+	size_t *tag_len
 
 unsigned char *
-get_wps_data(const u_char *data, size_t len, size_t *tag_len)
-
-unsigned char *
-get_wps_data_element(const u_char *data, size_t len, uint16_t type, size_t *el_len)
-
+get_wps_data_element(data,  length, type, el_len)
+	const u_char *data 
+	size_t length
+	uint16_t type
+	size_t *el_len
 
 int
-libwps_has_rt_header(const u_char *packet, size_t len)
+libwps_has_rt_header(packet, length)
+	const u_char *packet
+	size_t length
 
 const u_char *
 libwps_radio_header(packet, length)
 	const u_char *packet
 	size_t length
 int
-wpa_eapol_key_mic(const u8 *key, int ver, const u8 *buf, size_t len, u8 *mic)
-	
+wpa_eapol_key_mic(key, ver, buf, length, mic)
+	const u8 *key
+	int ver
+	const u8 *buf
+	size_t length
+	u8 *mic
+
 void
 wpa_pmk_to_ptk(const u8 *pmk, size_t pmk_len, const char *label,const u8 *addr1, const u8 *addr2,const u8 *nonce1, const u8 *nonce2, u8 *ptk, size_t ptk_len, int use_sha256)
 
@@ -610,10 +640,18 @@ wpa_pmk_r1_to_ptk(const u8 *pmk_r1, const u8 *snonce, const u8 *anonce, const u8
 
 
 int
-wpa_parse_wpa_ie_rsn(const u8 *rsn_ie, size_t rsn_ie_len, WPA_IE_DATA *data)
-
+wpa_parse_wpa_ie_rsn(rsn_ie, rsn_ie_len, data)
+	const u8 *rsn_ie
+	size_t rsn_ie_len
+	WPA_IE_DATA *data
 void
-rsn_pmkid(const u8 *pmk, size_t pmk_len, const u8*aa, const u8 *spa, u8 *pmkid, int use_sha256)
+rsn_pmkid(pmk, pmk_len, aa, spa, pmkid, use_sha256)
+	const u8 *pmk
+	size_t pmk_len
+	const u8*aa
+	const u8 *spa
+	u8 *pmkid
+	int use_sha256
 
 const char * 
 wpa_cipher_txt(cipher)

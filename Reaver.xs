@@ -187,8 +187,6 @@ size_t
 build_AUTH_MANAGEMENT_FRAME(f)
 	AUTH_MANAGEMENT_FRAME *f
 
-#size_t
-# build_ssid_tagged_parameter(unsigned char buf[IW_ESSID_MAX_SIZE+2], char *essid)
 
 size_t
 build_supported_rates_tagged_parameter(buf, buflength)
@@ -434,11 +432,6 @@ int
 wps_build_public_key(wps, msg)
 	WPS_DATA *wps
 	WPA_BUF *msg
-int
-wps_build_req_type(WPA_BUF *msg, enum wps_request_type type)
-
-int
-wps_build_resp_type(WPA_BUF *msg, enum wps_response_type type)
 
 int
 wps_build_config_methods(msg, methods)
@@ -473,7 +466,9 @@ int
 wps_build_version(msg)
 	WPA_BUF *msg
 int
-wps_build_msg_type(WPA_BUF *msg, enum wps_msg_type msg_type)
+wps_build_msg_type(msg, msg_type)
+	WPA_BUF *msg
+	enum wps_msg_type msg_type
 int
 wps_build_enrollee_nonce(wps, msg)
 	WPS_DATA *wps
@@ -600,9 +595,9 @@ wps_device_data_free(dev)
 	WPS_DEVICE_DATA *dev
 	
 int
-parse_wps_tag(const u_char *tags, size_t len, struct libwps_data *wps)
+parse_wps_tag(tags, length, wps)
 	const u_char *tags
-	size_t len
+	size_t length
 	struct libwps_data *wps
 	
 unsigned char *

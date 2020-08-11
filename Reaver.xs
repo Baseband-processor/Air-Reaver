@@ -15,6 +15,7 @@
 #include "C/src/builder.h"
 #include "C/src/wps/wps_registrar.c"
 
+typedef struct wps_credential                      *WPS_CREDENTIAL;
 
 typedef struct {
 	int proto
@@ -69,20 +70,22 @@ typedef struct {
 typedef struct wps_registrar_device                  *WPS_REGISTRAR_DEVICE;
 typedef struct wpa_buf                               *WPA_BUF;
 typedef struct wps_context                           *WPS_CONTEXT;
+typedef struct dl_list                               *DLLIST;
+typedef struct wps_pbc_session                       *WPS_PBC_SESSION;
 
 typedef struct  {
 	WPS_CONTEXT *wps;
 	int pbc;
 	int selected_registrar;
 	int (*new_psk_cb)(void *ctx, const u8 *mac_addr, const u8 *psk, size_t psk_len);
-	int (*set_ie_cb)(void *ctx, struct wpabuf *beacon_ie, struct wpabuf *probe_resp_ie);
+	int (*set_ie_cb)(void *ctx, WPA_BUF *beacon_ie, WPA_BUF *probe_resp_ie);
 	void (*pin_needed_cb)(void *ctx, const u8 *uuid_e, const struct wps_device_data *dev);
 	void (*reg_success_cb)(void *ctx, const u8 *mac_addr, const u8 *uuid_e);
 	void (*set_sel_reg_cb)(void *ctx, int sel_reg, u16 dev_passwd_id, u16 sel_reg_config_methods);
 	void (*enrollee_seen_cb)(void *ctx, const u8 *addr, const u8 *uuid_e, const u8 *pri_dev_type, u16 config_methods, u16 dev_password_id, u8 request_type, const char *dev_name);
 	void *cb_ctx;
-	struct dl_list pins;
-	struct wps_pbc_session *pbc_sessions;
+	DLLIST pins;
+	WPS_PBC_SESSION *pbc_sessions;
 	int skip_cred_build;
 	WPA_BUF *extra_cred;
 	int disable_auto_conf;
@@ -95,6 +98,62 @@ typedef struct  {
 }wps_registrar;
 
 typedef struct wps_registrar                         *WPS_REGISTRAR;
+
+
+typedef struct  {
+	struct wps_context *wps;
+	char *key;
+	char *essid;
+	int registrar;
+	int er;
+	enum {
+		SEND_M1, RECV_M2, SEND_M3, RECV_M4, SEND_M5, RECV_M6, SEND_M7,
+		RECV_M8, RECEIVED_M2D, WPS_MSG_DONE, RECV_ACK, WPS_FINISHED,
+		SEND_WSC_NACK,
+		RECV_M1, SEND_M2, RECV_M3, SEND_M4, RECV_M5, SEND_M6,
+		RECV_M7, SEND_M8, RECV_DONE, SEND_M2D, RECV_M2D_ACK
+	} state;
+	u8 uuid_e[WPS_UUID_LEN];
+	u8 uuid_r[WPS_UUID_LEN];
+	u8 mac_addr_e[ETH_ALEN];
+	u8 nonce_e[WPS_NONCE_LEN];
+	u8 nonce_r[WPS_NONCE_LEN];
+	u8 psk1[WPS_PSK_LEN];
+	u8 psk2[WPS_PSK_LEN];
+	u8 snonce[2 * WPS_SECRET_NONCE_LEN];
+	u8 peer_hash1[WPS_HASH_LEN];
+	u8 peer_hash2[WPS_HASH_LEN];
+	WPA_BUF *dh_privkey;
+	WPA_BUF *dh_pubkey_e;
+	WPA_BUF *dh_pubkey_r;
+	u8 authkey[WPS_AUTHKEY_LEN];
+	u8 keywrapkey[WPS_KEYWRAPKEY_LEN];
+	u8 emsk[WPS_EMSK_LEN];
+	WPA_BUF *last_msg;
+	u8 *dev_password;
+	size_t dev_password_len;
+	u16 dev_pw_id;
+	int pbc;
+	u8 request_type;
+	u16 encr_type;
+	u16 auth_type;
+	u8 *new_psk;
+	size_t new_psk_len;
+	int wps_pin_revealed;
+	WPS_CREDENTIAL cred;
+	struct wps_device_data peer_dev;
+	u16 config_error;
+	int ext_reg;
+	int int_reg;
+	WPS_CREDENTIAL *new_ap_settings;
+	void *dh_ctx;
+	void (*ap_settings_cb)(void *ctx, const WPS_CREDENTIAL *cred);
+	void *ap_settings_cb_ctx;
+	WPS_CREDENTIAL *use_cred;
+	int use_psk_key;
+}wps_data;
+
+typedef struct wps_data                              *WPS_DATA;
 
 typedef struct wps_registrar_config                  *WPS_REGISTRAR_CONFIG;
 typedef struct wps_parse_attr                        *WPS_PARSE_ATTR;

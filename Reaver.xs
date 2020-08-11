@@ -18,6 +18,20 @@
 typedef struct wps_credential                      *WPS_CREDENTIAL;
 
 typedef struct {
+	u8 mac_addr[ETH_ALEN];
+	char *device_name;
+	char *manufacturer;
+	char *model_name;
+	char *model_number;
+	char *serial_number;
+	u8 pri_dev_type[WPS_DEV_TYPE_LEN];
+	u32 os_version;
+	u8 rf_bands;
+}wps_device_data;	
+		
+typedef struct wps_device_data                    *WPS_DEVICE_DATA;
+
+typedef struct {
 	int proto
 	int pairwise_cipher
 	int group_cipher
@@ -79,7 +93,7 @@ typedef struct  {
 	int selected_registrar;
 	int (*new_psk_cb)(void *ctx, const u8 *mac_addr, const u8 *psk, size_t psk_len);
 	int (*set_ie_cb)(void *ctx, WPA_BUF *beacon_ie, WPA_BUF *probe_resp_ie);
-	void (*pin_needed_cb)(void *ctx, const u8 *uuid_e, const struct wps_device_data *dev);
+	void (*pin_needed_cb)(void *ctx, const u8 *uuid_e, const WPS_DEVICE_DATA *dev);
 	void (*reg_success_cb)(void *ctx, const u8 *mac_addr, const u8 *uuid_e);
 	void (*set_sel_reg_cb)(void *ctx, int sel_reg, u16 dev_passwd_id, u16 sel_reg_config_methods);
 	void (*enrollee_seen_cb)(void *ctx, const u8 *addr, const u8 *uuid_e, const u8 *pri_dev_type, u16 config_methods, u16 dev_password_id, u8 request_type, const char *dev_name);
@@ -141,7 +155,7 @@ typedef struct  {
 	size_t new_psk_len;
 	int wps_pin_revealed;
 	WPS_CREDENTIAL cred;
-	struct wps_device_data peer_dev;
+	WPS_DEVICE_DATA peer_dev;
 	u16 config_error;
 	int ext_reg;
 	int int_reg;

@@ -14,8 +14,38 @@
 #include "C/src/cracker.h"
 #include "C/src/builder.h"
 
-typedef struct association_request_management_frame  *ASSOCIATION_REQUEST_MANAGEMENT_FRAME;
+
+typedef struct{
+	le16 algorithm;
+	le16 sequence;
+	le16 status;
+}authentication_management_frame;
+
 typedef struct authentication_management_frame       *AUTH_MANAGEMENT_FRAME;
+
+typedef struct {
+	le16 capability;
+	le16 listen_interval;
+}association_request_management_frame;
+
+typedef struct association_request_management_frame  *ASSOCIATION_REQUEST_MANAGEMENT_FRAME;
+
+typedef struct {
+	le16 capability;
+	le16 status;
+	le16 id;
+}association_response_management_frame;
+
+typedef struct association_response_management_frame  *ASSOCIATION_RESP_MANAGEMENT_FRAME;
+	
+typedef struct  {
+	unsigned char timestamp[TIMESTAMP_LEN];
+	le16 beacon_interval;
+	le16 capability;
+}beacon_management_frame;
+
+typedef struct beacon_management_frame               *BEACON_MANAGEMENT_FRAME;
+
 typedef struct wpa_buf                               *WPA_BUF;
 typedef struct wps_registrar                         *WPS_REGISTRAR;
 typedef struct wps_registrar_config                  *WPS_REGISTRAR_CONFIG;

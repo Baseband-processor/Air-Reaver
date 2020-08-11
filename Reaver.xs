@@ -503,26 +503,41 @@ wps_build_oob_dev_password(msg, wps)
 	WPA_BUF *msg
 	WPS_CONTEXT *wps
 int
-wps_process_authenticator(WPS_DATA *wps, const u8 *authenticator, const WPA_BUF *msg)
-
+wps_process_authenticator(wps, authenticator, sg)
+	WPS_DATA *wps
+	const u8 *authenticator
+	const WPA_BUF *msg
 int
-wps_process_key_wrap_auth(WPS_DATA *wps, WPA_BUF *msg, const u8 *key_wrap_auth)
-
+wps_process_key_wrap_auth(wps, msg, key_wrap_auth)
+	WPS_DATA *wps
+	WPA_BUF *msg
+	const u8 *key_wrap_auth
 int
-wps_process_cred(struct wps_parse_attr *attr, WPS_CREDENTIAL *cred)
-
+wps_process_cred(attr, cred)
+	WPS_PARSE_ATTR *attr
+	WPS_CREDENTIAL *cred
 int
-wps_process_ap_settings(struct wps_parse_attr *attr, WPS_CREDENTIAL *cred)
+wps_process_ap_settings(attr, cred)
+	WPS_PARSE_ATTR *attr
+	WPS_CREDENTIAL *cred
 
 WPA_BUF *
-wps_enrollee_get_msg(WPS_DATA *wps, enum wsc_op_code *op_code)
-
+wps_enrollee_get_msg(wps, op_code)
+	WPS_DATA *wps
+	enum wsc_op_code *op_code
+	
 enum wps_process_res
-wps_enrollee_process_msg(WPS_DATA *wps,enum wsc_op_code op_code, const WPA_BUF *msg)
-
+wps_enrollee_process_msg(wps,op_code, msg)
+	WPS_DATA *wps
+	enum wsc_op_code op_code
+	const WPA_BUF *msg
+	
 WPA_BUF *
-wps_registrar_get_msg(WPS_DATA *wps, enum wsc_op_code *op_code, int type)
-
+wps_registrar_get_msg(wps, op_code, type)
+	WPS_DATA *wps
+	enum wsc_op_code *op_code
+	int type
+	
 int
 wps_build_cred(wps,msg)
 	WPS_DATA *wps
@@ -621,22 +636,71 @@ wpa_eapol_key_mic(key, ver, buf, length, mic)
 	u8 *mic
 
 void
-wpa_pmk_to_ptk(const u8 *pmk, size_t pmk_len, const char *label,const u8 *addr1, const u8 *addr2,const u8 *nonce1, const u8 *nonce2, u8 *ptk, size_t ptk_len, int use_sha256)
-
-int
-wpa_ft_mic(const u8 *kck, const u8 *sta_addr, const u8 *ap_addr, u8 transaction_seqnum, const u8 *mdie, size_t mdie_len, const u8 *ftie, size_t ftie_len, const u8 *rsnie, size_t rsnie_len, const u8 *ric, size_t ric_len, u8 *mic)
-
-void
-wpa_derive_pmk_r0(const u8 *xxkey, size_t xxkey_len,    const u8 *ssid, size_t ssid_len, const u8 *mdid, const u8 *r0kh_id, size_t r0kh_id_len, const u8 *s0kh_id, u8 *pmk_r0, u8 *pmk_r0_name)
-
-void
-wpa_derive_pmk_r1_name(const u8 *pmk_r0_name, const u8 *r1kh_id, const u8 *s1kh_id, u8 *pmk_r1_name)
-
-void
-wpa_derive_pmk_r1(const u8 *pmk_r0, const u8 *pmk_r0_name, const u8 *r1kh_id, const u8 *s1kh_id, u8 *pmk_r1, u8 *pmk_r1_name)
+wpa_pmk_to_ptk(pmk, pmk_len, label, addr1, addr2, nonce1, nonce2, ptk, ptk_len, use_sha256)
+	const u8 *pmk
+	size_t pmk_len
+	const char *label
+	const u8 *addr1
+	const u8 *addr2
+	const u8 *nonce1
+	const u8 *nonce2
+	u8 *ptk
+	size_t ptk_len
+	int use_sha256
 	
+int
+wpa_ft_mic(kck, sta_addr, ap_addr, transaction_seqnum, mdie, mdie_len, ftie, ftie_len, rsnie, rsnie_len, ric, ric_len, mic)
+	const u8 *kck
+	const u8 *sta_addr
+	const u8 *ap_addr
+	u8 transaction_seqnum
+	const u8 *mdie
+	size_t mdie_len
+	const u8 *ftie
+	size_t ftie_len
+	const u8 *rsnie
+	size_t rsnie_len
+	const u8 *ric
+	size_t ric_len, u8 *mic
+
 void
-wpa_pmk_r1_to_ptk(const u8 *pmk_r1, const u8 *snonce, const u8 *anonce, const u8 *sta_addr, const u8 *bssid, const u8 *pmk_r1_name, u8 *ptk, size_t ptk_len, u8 *ptk_name)
+wpa_derive_pmk_r0(xxkey, xxkey_len, ssid, ssid_len, mdid, r0kh_id, r0kh_id_len, s0kh_id, pmk_r0, pmk_r0_name)
+	const u8 *xxkey
+	size_t xxkey_len
+	const u8 *ssid
+	size_t ssid_len
+	const u8 *mdid
+	const u8 *r0kh_id
+	size_t r0kh_id_len
+	const u8 *s0kh_id
+	u8 *pmk_r0
+	u8 *pmk_r0_name
+
+void
+wpa_derive_pmk_r1_name(pmk_r0_name, r1kh_id, s1kh_id, pmk_r1_name)
+	const u8 *pmk_r0_name
+	const u8 *r1kh_id
+	const u8 *s1kh_id
+	u8 *pmk_r1_name
+void
+wpa_derive_pmk_r1(pmk_r0, pmk_r0_name, r1kh_id, s1kh_id, pmk_r1, pmk_r1_name)
+	const u8 *pmk_r0
+	const u8 *pmk_r0_name
+	const u8 *r1kh_id
+	const u8 *s1kh_id
+	u8 *pmk_r1
+	u8 *pmk_r1_name
+void
+wpa_pmk_r1_to_ptk(pmk_r1, snonce, anonce, sta_addr, bssid, pmk_r1_name, ptk, ptk_len, ptk_name)
+	const u8 *pmk_r1
+	const u8 *snonce
+	const u8 *anonce
+	const u8 *sta_addr
+	const u8 *bssid
+	const u8 *pmk_r1_name
+	u8 *ptk 
+	size_t ptk_len
+	u8 *ptk_name
 
 
 int

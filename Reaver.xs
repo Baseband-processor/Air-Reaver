@@ -534,8 +534,6 @@ get_wps_data(const u_char *data, size_t len, size_t *tag_len)
 unsigned char *
 get_wps_data_element(const u_char *data, size_t len, uint16_t type, size_t *el_len)
 
-char *
-hex2str(unsigned char *hex, int len)
 
 int
 libwps_has_rt_header(const u_char *packet, size_t len)
@@ -553,24 +551,17 @@ wpa_pmk_to_ptk(const u8 *pmk, size_t pmk_len, const char *label,
 		    const u8 *nonce1, const u8 *nonce2,
 		    u8 *ptk, size_t ptk_len, int use_sha256)
 
-#ifdef CONFIG_IEEE80211R
 int
- wpa_ft_mic(const u8 *kck, const u8 *sta_addr, const u8 *ap_addr,
-	       u8 transaction_seqnum, const u8 *mdie, size_t mdie_len,
-	       const u8 *ftie, size_t ftie_len,
-	       const u8 *rsnie, size_t rsnie_len,
-	       const u8 *ric, size_t ric_len, u8 *mic)
+wpa_ft_mic(const u8 *kck, const u8 *sta_addr, const u8 *ap_addr, u8 transaction_seqnum, const u8 *mdie, size_t mdie_len, const u8 *ftie, size_t ftie_len, const u8 *rsnie, size_t rsnie_len, const u8 *ric, size_t ric_len, u8 *mic)
 void
-wpa_derive_pmk_r0(const u8 *xxkey, size_t xxkey_len,    const u8 *ssid, size_t ssid_len, const u8 *mdid, const u8 *r0kh_id, size_t r0kh_id_len,
-		       const u8 *s0kh_id, u8 *pmk_r0, u8 *pmk_r0_name)
+wpa_derive_pmk_r0(const u8 *xxkey, size_t xxkey_len,    const u8 *ssid, size_t ssid_len, const u8 *mdid, const u8 *r0kh_id, size_t r0kh_id_len, const u8 *s0kh_id, u8 *pmk_r0, u8 *pmk_r0_name)
 void
- wpa_derive_pmk_r1_name(const u8 *pmk_r0_name, const u8 *r1kh_id,
-			    const u8 *s1kh_id, u8 *pmk_r1_name)
+wpa_derive_pmk_r1_name(const u8 *pmk_r0_name, const u8 *r1kh_id, const u8 *s1kh_id, u8 *pmk_r1_name)
 void
- wpa_derive_pmk_r1(const u8 *pmk_r0, const u8 *pmk_r0_name, const u8 *r1kh_id, const u8 *s1kh_id, u8 *pmk_r1, u8 *pmk_r1_name)
+wpa_derive_pmk_r1(const u8 *pmk_r0, const u8 *pmk_r0_name, const u8 *r1kh_id, const u8 *s1kh_id, u8 *pmk_r1, u8 *pmk_r1_name)
 	
 void
- wpa_pmk_r1_to_ptk(const u8 *pmk_r1, const u8 *snonce, const u8 *anonce, const u8 *sta_addr, const u8 *bssid, const u8 *pmk_r1_name, u8 *ptk, size_t ptk_len, u8 *ptk_name)
+wpa_pmk_r1_to_ptk(const u8 *pmk_r1, const u8 *snonce, const u8 *anonce, const u8 *sta_addr, const u8 *bssid, const u8 *pmk_r1_name, u8 *ptk, size_t ptk_len, u8 *ptk_name)
 
 
 int

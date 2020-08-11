@@ -560,23 +560,23 @@ wps_build_device_attrs(dev, msg)
 	WPS_DEVICE_DATA *dev
 	WPA_BUF *msg
 int
- wps_build_os_version(struct wps_device_data *dev, WPA_BUF *msg)
+ wps_build_os_version(WPS_DEVICE_DATA *dev, WPA_BUF *msg)
 int
- wps_build_rf_bands(struct wps_device_data *dev, WPA_BUF *msg)
+ wps_build_rf_bands(WPS_DEVICE_DATA *dev, WPA_BUF *msg)
 int
- wps_build_primary_dev_type(struct wps_device_data *dev, WPA_BUF *msg)
+ wps_build_primary_dev_type(WPS_DEVICE_DATA *dev, WPA_BUF *msg)
 int
- wps_process_device_attrs(struct wps_device_data *dev, struct wps_parse_attr *attr)
+ wps_process_device_attrs(WPS_DEVICE_DATA *dev, struct wps_parse_attr *attr)
 int
-wps_process_os_version(struct wps_device_data *dev, const u8 *ver)
+wps_process_os_version(WPS_DEVICE_DATA *dev, const u8 *ver)
 	
 int
-wps_process_rf_bands(struct wps_device_data *dev, const u8 *bands)
+wps_process_rf_bands(WPS_DEVICE_DATA *dev, const u8 *bands)
 
 void
-wps_device_data_dup(struct wps_device_data *dst, const struct wps_device_data *src)
+wps_device_data_dup(WPS_DEVICE_DATA *dst, const WPS_DEVICE_DATA *src)
 void
-wps_device_data_free(struct wps_device_data *dev)
+wps_device_data_free(WPS_DEVICE_DATA *dev)
 
 int
 parse_wps_tag(const u_char *tags, size_t len, struct libwps_data *wps)

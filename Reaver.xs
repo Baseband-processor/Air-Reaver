@@ -335,16 +335,19 @@ enum wps_process_res wps_registrar_process_msg(struct wps_data *wps,
 					       enum wsc_op_code op_code,
 					       const struct wpabuf *msg)
 int
- wps_build_cred(struct wps_data *wps, struct wpabuf *msg)
+wps_build_cred(struct wps_data *wps, struct wpabuf *msg)
+
 int
- wps_device_store(struct wps_registrar *reg,
-		     struct wps_device_data *dev, const u8 *uuid)
+wps_device_store(struct wps_registrar *reg,struct wps_device_data *dev, const u8 *uuid)
+
 void
- wps_registrar_selected_registrar_changed(struct wps_registrar *reg)
+wps_registrar_selected_registrar_changed(struct wps_registrar *reg)
+	
 int
- wps_er_pbc(struct wps_er *er, const u8 *uuid)
+wps_er_pbc(struct wps_er *er, const u8 *uuid)
+
 int
- wps_er_learn(struct wps_er *er, const u8 *uuid, const u8 *pin,
+wps_er_learn(struct wps_er *er, const u8 *uuid, const u8 *pin,
 		 size_t pin_len)
 
 int
@@ -353,8 +356,10 @@ char
  * wps_dev_type_bin2str(const u8 dev_type[WPS_DEV_TYPE_LEN], char *buf,
 			    size_t buf_len)
 void
- uuid_gen_mac_addr(const u8 *mac_addr, u8 *uuid)
-u16 wps_config_methods_str2bin(const char *str)
+uuid_gen_mac_addr(const u8 *mac_addr, u8 *uuid)
+
+u16 
+wps_config_methods_str2bin(const char *str)
 
 
 int

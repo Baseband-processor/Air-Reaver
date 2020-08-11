@@ -15,6 +15,20 @@
 #include "C/src/builder.h"
 #include "C/src/wps/wps_registrar.c"
 
+
+typedef struct {
+	int proto
+	int pairwise_cipher
+	int group_cipher
+	int key_mgmt
+	int capabilities
+	size_t num_pmkid
+	const u8 *pmkid
+	int mgmt_group_cipher
+}wpa_ie_data;
+
+typedef struct wpa_ie_data		            *WPA_IE_DATA;
+
 typedef struct{
 	le16 algorithm;
 	le16 sequence;
@@ -490,44 +504,43 @@ void
  wpa_derive_pmk_r1_name(const u8 *pmk_r0_name, const u8 *r1kh_id,
 			    const u8 *s1kh_id, u8 *pmk_r1_name)
 void
- wpa_derive_pmk_r1(const u8 *pmk_r0, const u8 *pmk_r0_name,
-		       const u8 *r1kh_id, const u8 *s1kh_id,
-		       u8 *pmk_r1, u8 *pmk_r1_name)
+ wpa_derive_pmk_r1(const u8 *pmk_r0, const u8 *pmk_r0_name, const u8 *r1kh_id, const u8 *s1kh_id, u8 *pmk_r1, u8 *pmk_r1_name)
+	
 void
- wpa_pmk_r1_to_ptk(const u8 *pmk_r1, const u8 *snonce, const u8 *anonce,
-		       const u8 *sta_addr, const u8 *bssid,
-		       const u8 *pmk_r1_name,
-		       u8 *ptk, size_t ptk_len, u8 *ptk_name)
+ wpa_pmk_r1_to_ptk(const u8 *pmk_r1, const u8 *snonce, const u8 *anonce, const u8 *sta_addr, const u8 *bssid, const u8 *pmk_r1_name, u8 *ptk, size_t ptk_len, u8 *ptk_name)
 
 
-struct wpa_ie_data {
-	int proto
-	int pairwise_cipher
-	int group_cipher
-	int key_mgmt
-	int capabilities
-	size_t num_pmkid
+int
+ wpa_parse_wpa_ie_rsn(const u8 *rsn_ie, size_t rsn_ie_len, struct wpa_ie_data *data)
+
+void
+rsn_pmkid(const u8 *pmk, size_t pmk_len, const u8*aa, const u8 *spa, u8 *pmkid, int use_sha256)
+
+const char * 
+wpa_cipher_txt(cipher)
+	int cipher
+	
+const char * 
+wpa_key_mgmt_txt(key_management, protocol)
+	int key_management
+	int protocol
+int
+wpa_compare_rsn_ie(ft_initial_assoc, ie1, ie1len,ie2, ie2len)
+	int ft_initial_assoc
+	const u8 *ie1
+	size_t ie1len
+	const u8 *ie2
+	size_t ie2len
+	    CODE:
+		RETVAL = wpa_compare_rsn_ie(ft_initial_assoc, &ie1, ie1len, &ie2, ie2len);
+	   OUTPUT:
+		RETVAL
+int
+wpa_insert_pmkid(ies, ies_len, pmkid)
+	u8 *ies
+	size_t ies_len
 	const u8 *pmkid
-	int mgmt_group_cipher
-}
-
-
-int
- wpa_parse_wpa_ie_rsn(const u8 *rsn_ie, size_t rsn_ie_len,
-			 struct wpa_ie_data *data)
-
-void
- rsn_pmkid(const u8 *pmk, size_t pmk_len, const u8 *aa, const u8 *spa,
-	       u8 *pmkid, int use_sha256)
-
-const char * wpa_cipher_txt(int cipher)
-const char * wpa_key_mgmt_txt(int key_mgmt, int proto)
-int
- wpa_compare_rsn_ie(int
- ft_initial_assoc,
-		       const u8 *ie1, size_t ie1len,
-		       const u8 *ie2, size_t ie2len)
-int
- wpa_insert_pmkid(u8 *ies, size_t ies_len, const u8 *pmkid)
-
-
+	  CODE:
+	    RETVAL = wpa_insert_pmkid(&ies, ies_len, &pmkid);
+	  OUTPUT:
+	     RETVAL

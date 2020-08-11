@@ -15,6 +15,7 @@
 #include "C/src/builder.h"
 #include "C/src/wps/wps_registrar.c"
 
+typedef struct wps_er                              *WPS_ER;
 typedef struct wps_context                         *WPS_CONTEXT;
 typedef struct wps_credential                      *WPS_CREDENTIAL;
 
@@ -353,7 +354,7 @@ unsigned int
 wps_generate_pin(void)
 
 void
- wps_free_pending_msgs(struct upnp_pending_message *msgs)
+wps_free_pending_msgs(struct upnp_pending_message *msgs)
 
 struct oob_device_data *
 wps_get_oob_device(char *device_type)
@@ -366,35 +367,56 @@ int
 	char *method
 	
 int
- wps_process_oob(struct wps_context *wps, struct oob_device_data *oob_dev,
-		    int registrar)
-int
- wps_attr_text(struct wpabuf *data, char *buf, char *end)
-
-struct wps_er * wps_er_init(struct wps_context *wps, const char *ifname)
-void
- wps_er_refresh(struct wps_er *er)
-void
- wps_er_deinit(struct wps_er *er, void
- (*cb)(void
- *ctx), void
- *ctx)
-void
- wps_er_set_sel_reg(struct wps_er *er, int sel_reg, u16 dev_passwd_id,
-			u16 sel_reg_config_methods)
-
-
-void
- wps_kdf(const u8 *key, const u8 *label_prefix, size_t label_prefix_len,
-	     const char *label, u8 *res, size_t res_len)
-int
-wps_derive_keys(struct wps_data *wps)
-
-void
-wps_derive_psk(struct wps_data *wps, const u8 *dev_passwd, size_t dev_passwd_len)
+wps_attr_text(data, buf, end)
+	WPA_BUF *data
+	char *buf
+	char *end
 	
-struct wpabuf * wps_decrypt_encr_settings(struct wps_data *wps, const u8 *encr, size_t encr_len)
+WPS_ER *
+wps_er_init(wps, ifname)
+	WPS_CONTEXT *wps
+	const char *ifname
+void
+wps_er_refresh(er)
+	WPS_ER *er
+void
+wps_er_set_sel_reg(er,  sel_reg,  dev_passwd_id, sel_reg_config_methods)
+	WPS_ER *er
+	int sel_reg
+	u16 dev_passwd_id
+	u16 sel_reg_config_methods
+	CODE:
+		RETVAL = wps_er_set_sel_reg(&er,  sel_reg,  dev_passwd_id, sel_reg_config_methods);
+	  OUTPUT:
+	        RETVAL
+	
+void
+wps_kdf(key, label_prefix, label_prefix_len, label, res, res_len)
+	const u8 *key
+	const u8 *label_prefix
+	size_t label_prefix_len
+	const char *label
+	u8 *res
+	size_t res_len
+	  CODE:
+		RETVAL = wps_kdf(&key, &label_prefix, label_prefix_len, &label, &res, res_len);
+	  OUTPUT:
+	        RETVAL
+int
+wps_derive_keys(wps)
+	WPS_DATA *wps
 
+void
+wps_derive_psk(wps, dev_passwd, dev_passwd_len)
+	WPS_DATA *wps
+	const u8 *dev_passwd
+	size_t dev_passwd_len
+	
+WPA_BUF *
+wps_decrypt_encr_settings(wps, encr, encr_len)
+	WPS_DATA *wps
+	const u8 *encr
+	size_t encr_len
 void
 wps_success_event(wps)
 	WPS_CONTEXT *wps
@@ -423,23 +445,26 @@ int
 wps_build_public_key(WPS_DATA *wps, WPA_BUF *msg)
 
 int
- wps_build_req_type(struct wpabuf *msg, enum wps_request_type type)
+wps_build_req_type(struct wpabuf *msg, enum wps_request_type type)
+
 int
- wps_build_resp_type(struct wpabuf *msg, enum wps_response_type type)
+wps_build_resp_type(struct wpabuf *msg, enum wps_response_type type)
+
 int
- wps_build_config_methods(struct wpabuf *msg, u16 methods)
+wps_build_config_methods(struct wpabuf *msg, u16 methods)
+			
 int
- wps_build_uuid_e(struct wpabuf *msg, const u8 *uuid)
+wps_build_uuid_e(struct wpabuf *msg, const u8 *uuid)
 int
- wps_build_dev_password_id(struct wpabuf *msg, u16 id)
+wps_build_dev_password_id(struct wpabuf *msg, u16 id)
 int
- wps_build_config_error(struct wpabuf *msg, u16 err)
+wps_build_config_error(struct wpabuf *msg, u16 err)
 int
- wps_build_authenticator(struct wps_data *wps, struct wpabuf *msg)
+wps_build_authenticator(struct wps_data *wps, struct wpabuf *msg)
 int
- wps_build_key_wrap_auth(struct wps_data *wps, struct wpabuf *msg)
+wps_build_key_wrap_auth(struct wps_data *wps, struct wpabuf *msg)
 int
- wps_build_encr_settings(struct wps_data *wps, struct wpabuf *msg,
+wps_build_encr_settings(struct wps_data *wps, struct wpabuf *msg,
 			    struct wpabuf *plain)
 int
  wps_build_version(struct wpabuf *msg)

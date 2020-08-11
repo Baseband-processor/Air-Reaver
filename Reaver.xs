@@ -13,7 +13,7 @@
 #include "C/src/pixie.h"
 #include "C/src/cracker.h"
 #include "C/src/builder.h"
-
+#include "C/src/wps/wps_registrar.c"
 
 typedef struct{
 	le16 algorithm;
@@ -47,11 +47,36 @@ typedef struct  {
 typedef struct beacon_management_frame               *BEACON_MANAGEMENT_FRAME;
 
 typedef struct wpa_buf                               *WPA_BUF;
-typedef struct wps_registrar                         *WPS_REGISTRAR;
-typedef struct wps_registrar_config                  *WPS_REGISTRAR_CONFIG;
 typedef struct wps_context                           *WPS_CONTEXT;
-typedef struct wps_parse_attr                        *WPS_PARSE_ATTR;
 
+struct wps_registrar {
+	WPS_CONTEXT *wps;
+	int pbc;
+	int selected_registrar;
+	int (*new_psk_cb)(void *ctx, const u8 *mac_addr, const u8 *psk, size_t psk_len);
+	int (*set_ie_cb)(void *ctx, struct wpabuf *beacon_ie, struct wpabuf *probe_resp_ie);
+	void (*pin_needed_cb)(void *ctx, const u8 *uuid_e, const struct wps_device_data *dev);
+	void (*reg_success_cb)(void *ctx, const u8 *mac_addr, const u8 *uuid_e);
+	void (*set_sel_reg_cb)(void *ctx, int sel_reg, u16 dev_passwd_id, u16 sel_reg_config_methods);
+	void (*enrollee_seen_cb)(void *ctx, const u8 *addr, const u8 *uuid_e, const u8 *pri_dev_type, u16 config_methods, u16 dev_password_id, u8 request_type, const char *dev_name);
+	void *cb_ctx;
+	struct dl_list pins;
+	struct wps_pbc_session *pbc_sessions;
+	int skip_cred_build;
+	WPA_BUF *extra_cred;
+	int disable_auto_conf;
+	int sel_reg_union;
+	int sel_reg_dev_password_id_override;
+	int sel_reg_config_methods_override;
+	int static_wep_only;
+	struct wps_registrar_device *devices;
+	int force_pbc_overlap;
+};
+
+typedef struct wps_registrar                         *WPS_REGISTRAR;
+
+typedef struct wps_registrar_config                  *WPS_REGISTRAR_CONFIG;
+typedef struct wps_parse_attr                        *WPS_PARSE_ATTR;
 typedef time_t TIME;
 
 size_t

@@ -370,30 +370,41 @@ int
  wps_process_device_attrs(struct wps_device_data *dev,
 			     struct wps_parse_attr *attr)
 int
- wps_process_os_version(struct wps_device_data *dev, const u8 *ver)
+wps_process_os_version(struct wps_device_data *dev, const u8 *ver)
+	
 int
- wps_process_rf_bands(struct wps_device_data *dev, const u8 *bands)
+wps_process_rf_bands(struct wps_device_data *dev, const u8 *bands)
+
 void
- wps_device_data_dup(struct wps_device_data *dst,
+wps_device_data_dup(struct wps_device_data *dst,
 			 const struct wps_device_data *src)
 void
- wps_device_data_free(struct wps_device_data *dev)
-int
- parse_wps_tag(const u_char *tags, size_t len, struct libwps_data *wps)
-unsigned char *get_wps_data(const u_char *data, size_t len, size_t *tag_len)
-unsigned char *get_wps_data_element(const u_char *data, size_t len, uint16_t type, size_t *el_len)
-char
- *hex2str(unsigned char *hex, int len)
+wps_device_data_free(struct wps_device_data *dev)
 
 int
- libwps_has_rt_header(const u_char *packet, size_t len)
-const u_char *libwps_radio_header(const u_char *packet, size_t len)
+parse_wps_tag(const u_char *tags, size_t len, struct libwps_data *wps)
+
+unsigned char *
+get_wps_data(const u_char *data, size_t len, size_t *tag_len)
+
+unsigned char *
+get_wps_data_element(const u_char *data, size_t len, uint16_t type, size_t *el_len)
+
+char *
+hex2str(unsigned char *hex, int len)
+
 int
- wpa_eapol_key_mic(const u8 *key, int
- ver, const u8 *buf, size_t len,
-		      u8 *mic)
+libwps_has_rt_header(const u_char *packet, size_t len)
+
+const u_char *
+libwps_radio_header(packet, length)
+	const u_char *packet
+	size_t length
+int
+wpa_eapol_key_mic(const u8 *key, int ver, const u8 *buf, size_t len, u8 *mic)
+	
 void
- wpa_pmk_to_ptk(const u8 *pmk, size_t pmk_len, const char *label,
+wpa_pmk_to_ptk(const u8 *pmk, size_t pmk_len, const char *label,
 		    const u8 *addr1, const u8 *addr2,
 		    const u8 *nonce1, const u8 *nonce2,
 		    u8 *ptk, size_t ptk_len, int use_sha256)

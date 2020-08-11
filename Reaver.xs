@@ -46,10 +46,17 @@ typedef struct  {
 
 typedef struct beacon_management_frame               *BEACON_MANAGEMENT_FRAME;
 
+typedef struct {
+	struct wps_registrar_device *next;
+	struct wps_device_data dev;
+	u8 uuid[WPS_UUID_LEN];
+}wps_registrar_device;
+
+typedef struct wps_registrar_device                  *WPS_REGISTRAR_DEVICE;
 typedef struct wpa_buf                               *WPA_BUF;
 typedef struct wps_context                           *WPS_CONTEXT;
 
-struct wps_registrar {
+typedef struct  {
 	WPS_CONTEXT *wps;
 	int pbc;
 	int selected_registrar;
@@ -69,9 +76,9 @@ struct wps_registrar {
 	int sel_reg_dev_password_id_override;
 	int sel_reg_config_methods_override;
 	int static_wep_only;
-	struct wps_registrar_device *devices;
+	WPS_REGISTRAR_DEVICE *devices;
 	int force_pbc_overlap;
-};
+}wps_registrar;
 
 typedef struct wps_registrar                         *WPS_REGISTRAR;
 

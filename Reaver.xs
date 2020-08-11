@@ -195,9 +195,6 @@ build_supported_rates_tagged_parameter(buf, buflength)
 	unsigned char *buf
 	size_t buflength
 
-#size_t
-#build_wps_tagged_parameter(unsigned char buf[2+WPS_TAG_SIZE])
-
 size_t
 build_htcaps_parameter(buf, buflength)
 	unsigned char *buf
@@ -520,10 +517,10 @@ int
 wps_process_key_wrap_auth(WPS_DATA *wps, WPA_BUF *msg, const u8 *key_wrap_auth)
 
 int
-wps_process_cred(struct wps_parse_attr *attr, struct wps_credential *cred)
+wps_process_cred(struct wps_parse_attr *attr, WPS_CREDENTIAL *cred)
 
 int
-wps_process_ap_settings(struct wps_parse_attr *attr, struct wps_credential *cred)
+wps_process_ap_settings(struct wps_parse_attr *attr, WPS_CREDENTIAL *cred)
 
 WPA_BUF *
 wps_enrollee_get_msg(WPS_DATA *wps, enum wsc_op_code *op_code)
@@ -563,7 +560,7 @@ wps_build_device_attrs(dev, msg)
 	WPS_DEVICE_DATA *dev
 	WPA_BUF *msg
 int
- wps_build_os_version(struct wps_device_data *dev, struct wpabuf *msg)
+ wps_build_os_version(struct wps_device_data *dev, WPA_BUF *msg)
 int
  wps_build_rf_bands(struct wps_device_data *dev, WPA_BUF *msg)
 int

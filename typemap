@@ -9,7 +9,7 @@ WPS_REGISTRAR_CONFIG *                 T_PTRREF
 const WPS_REGISTRAR_CONFIG *           T_PTRREF
 WPS_CONTEXT *                          T_PTRREF
 WPS_PARSE_ATTR *                       T_PTRREF
-WPS_ER *			                         T_PTRREF
+WPS_ER *			       T_PTRREF
 WPS_DATA *                             T_PTRREF
 TIME                                   T_PTRREF
 WSC_OP_CODE                            T_PTRREF
@@ -18,12 +18,16 @@ WPS_DEVICE_DATA *                      T_PTRREF
 WPS_PROCESS_RES                        T_PTRREF
 const WPS_DEVICE_DATA *                T_PTRREF
 LIBWPS_DATA *                          T_PTRREF
-WPA_IE_DATA *			                     T_PTRREF
-WPS_MESSAGE_TYPE                       T_PTRREF
-WPS_CREDENTIAL *                       T_PTRREF
-WPS_REGISTRER *                        T_PTRREF
+WPA_IE_DATA *			       T_PTRREF
+
+AUTH_MANAGEMENT_FRAME  T_PTRREF
+ASSOCIATION_REQUEST_MANAGEMENT_FRAME   T_PTRREF
+WPS_MESSAGE_TYPE			T_PTRREF
+WPS_CREDENTIAL *			T_PTRREF
+WPS_REGISTRER *			T_PTRREF
 
 const unsigned char * T_PV
+
 const u8 *          T_PV
 u8 *	            T_PV
 const char *        T_PV

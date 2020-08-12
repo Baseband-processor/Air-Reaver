@@ -529,18 +529,18 @@ wps_process_ap_settings(attr, cred)
 WPA_BUF *
 wps_enrollee_get_msg(wps, op_code)
 	WPS_DATA *wps
-	enum wsc_op_code *op_code
+	WSC_OP_CODE *op_code
 	
 enum wps_process_res
 wps_enrollee_process_msg(wps,op_code, msg)
 	WPS_DATA *wps
-	enum wsc_op_code op_code
+	WSC_OP_CODE op_code
 	const WPA_BUF *msg
 	
 WPA_BUF *
 wps_registrar_get_msg(wps, op_code, type)
 	WPS_DATA *wps
-	enum wsc_op_code *op_code
+	WSC_OP_CODE *op_code
 	int type
 	
 int
@@ -608,7 +608,7 @@ int
 parse_wps_tag(tags, length, wps)
 	const u_char *tags
 	size_t length
-	struct libwps_data *wps
+	LIBWPS_DATA *wps
 	
 unsigned char *
 get_wps_data(data, length, tag_len)

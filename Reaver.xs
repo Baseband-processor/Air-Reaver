@@ -19,6 +19,26 @@ typedef struct wps_er                              *WPS_ER;
 typedef struct wps_context                         *WPS_CONTEXT;
 typedef struct wps_credential                      *WPS_CREDENTIAL;
 
+typedef struct{
+        uint8_t version;
+        uint8_t state;
+        uint8_t locked;
+        char manufacturer[LIBWPS_MAX_STR_LEN];
+        char model_name[LIBWPS_MAX_STR_LEN];
+        char model_number[LIBWPS_MAX_STR_LEN];
+        char device_name[LIBWPS_MAX_STR_LEN];
+        char ssid[LIBWPS_MAX_STR_LEN];
+        char uuid[LIBWPS_MAX_STR_LEN];
+        char serial[LIBWPS_MAX_STR_LEN];
+        char selected_registrar[LIBWPS_MAX_STR_LEN];
+        char response_type[LIBWPS_MAX_STR_LEN];
+        char primary_device_type[LIBWPS_MAX_STR_LEN];
+        char config_methods[LIBWPS_MAX_STR_LEN];
+        char rf_bands[LIBWPS_MAX_STR_LEN];
+        char os_version[LIBWPS_MAX_STR_LEN];
+}libwps_data;
+
+typedef libwps_data                          *LIBWPS_DATA;
 typedef enum  wsc_op_code {
 	WSC_UPnP = 0,
 	WSC_Start = 0x01,

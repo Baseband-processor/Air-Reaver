@@ -558,7 +558,7 @@ wps_enrollee_get_msg(wps, op_code)
 	WPS_DATA *wps
 	WSC_OP_CODE *op_code
 	
-enum wps_process_res
+WPS_PROCESS_RES
 wps_enrollee_process_msg(wps,op_code, msg)
 	WPS_DATA *wps
 	WSC_OP_CODE op_code

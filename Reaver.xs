@@ -3,18 +3,13 @@
 #include "perl.h"
 #include "XSUB.h"
 
-#include "C/src/wps/wps.h"
-#include "C/src/wps/wps_defs.h"
-#include "C/src/wps/wps_i.h"
-#include "C/src/wps/wps_dev_attr.h"
-#include "C/src/libwps/libwps.h"
+#define TIMESTAMP_LEN           8
+
+#include "C/src/utils/common.h"
 #include "C/src/common/wpa_common.h"
-#include "C/src/pins.h"
-#include "C/src/send.h"
-#include "C/src/pixie.h"
-#include "C/src/cracker.h"
-#include "C/src/builder.h"
-#include "C/src/wps/wps_registrar.c"
+#include "C/src/wps/wps_defs.h"
+#include "C/src/wps/wps.h"
+#include "C/src/libwps/libwps.h"
 
 typedef struct wps_er                              *WPS_ER;
 typedef struct wps_context                         *WPS_CONTEXT;
@@ -90,14 +85,14 @@ typedef struct {
 typedef struct wps_device_data                    *WPS_DEVICE_DATA;
 
 typedef struct {
-	int proto
-	int pairwise_cipher
-	int group_cipher
-	int key_mgmt
-	int capabilities
-	size_t num_pmkid
-	const u8 *pmkid
-	int mgmt_group_cipher
+	int proto;
+	int pairwise_cipher;
+	int group_cipher;
+	int key_mgmt;
+	int capabilities;
+	size_t num_pmkid;
+	const u8 *pmkid;
+	int mgmt_group_cipher;
 }wpa_ie_data;
 
 typedef struct wpa_ie_data		            *WPA_IE_DATA;
@@ -234,6 +229,8 @@ typedef time_t TIME;
 size_t
 build_radio_tap_header(rt_header)
 	void *rt_header
+
+;
 
 size_t
 build_association_management_frame(f)

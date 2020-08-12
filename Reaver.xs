@@ -5,11 +5,8 @@
 
 #define TIMESTAMP_LEN           8
 
-#include "C/src/utils/common.h"
-#include "C/src/common/wpa_common.h"
-#include "C/src/wps/wps_defs.h"
-#include "C/src/wps/wps.h"
-#include "C/src/libwps/libwps.h"
+#include "Ctxs.h"
+
 
 typedef struct wps_er                              *WPS_ER;
 typedef struct wps_context                         *WPS_CONTEXT;
@@ -348,8 +345,8 @@ send_wsc_nack()
 
 
 int
-resend_last_packet(void)
-	void void
+resend_last_packet()
+
 
 int
 send_packet_internal(callerfunc, file, callerline, packet, length, use_timer)
@@ -419,7 +416,7 @@ wps_pin_valid(pin)
 	
 
 unsigned int 
-wps_generate_pin(void)
+wps_generate_pin()
 
 
 int
@@ -584,7 +581,7 @@ wps_build_oob_dev_password(msg, wps)
 	WPS_CONTEXT *wps
 
 int
-wps_process_authenticator(wps, authenticator, sg)
+wps_process_authenticator(wps, authenticator, msg)
 	WPS_DATA *wps
 	const u8 *authenticator
 	const WPA_BUF *msg
@@ -629,7 +626,7 @@ wps_build_cred(wps,msg)
 
 int
 wps_device_store(reg, dev, uuid)
-	WPS_REGISTRER *reg
+	WPS_REGISTRAR *reg
 	WPS_DEVICE_DATA *dev
 	const u8 *uuid
 	

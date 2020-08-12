@@ -524,7 +524,7 @@ wps_build_version(msg)
 int
 wps_build_msg_type(msg, msg_type)
 	WPA_BUF *msg
-	enum wps_msg_type msg_type
+	WPS_MESSAGE_TYPE msg_type
 int
 wps_build_enrollee_nonce(wps, msg)
 	WPS_DATA *wps

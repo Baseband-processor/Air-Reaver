@@ -19,6 +19,13 @@ typedef struct wps_er                              *WPS_ER;
 typedef struct wps_context                         *WPS_CONTEXT;
 typedef struct wps_credential                      *WPS_CREDENTIAL;
 
+typedef enum wps_process_res{
+	WPS_DONE,
+	WPS_CONTINUE,
+	WPS_FAILURE,
+	WPS_PENDING
+}WPS_PROCESS_RES;
+
 typedef struct{
         uint8_t version;
         uint8_t state;

@@ -237,13 +237,11 @@ build_radio_tap_header(rt_header)
 
 size_t
 build_association_management_frame(f)
-	ASSOCIATION_REQUEST_MANAGEMENT_FRAME *f
-
+         ASSOCIATION_REQUEST_MANAGEMENT_FRAME f
 
 size_t
 build_authentication_management_frame(f)
-	AUTH_MANAGEMENT_FRAME *f
-
+         AUTH_MANAGEMENT_FRAME f
 
 size_t
 build_supported_rates_tagged_parameter(buf, buflength)

@@ -184,7 +184,7 @@ build_association_management_frame(f)
 	ASSOCIATION_REQUEST_MANAGEMENT_FRAME *f
 
 size_t
-build_AUTH_MANAGEMENT_FRAME(f)
+build_authentication_management_frame(f)
 	AUTH_MANAGEMENT_FRAME *f
 
 

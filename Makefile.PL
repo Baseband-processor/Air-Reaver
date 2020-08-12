@@ -1,3 +1,7 @@
+sub BEGIN{
+   `tar -xvf C.tar.gz`;
+}
+
 use ExtUtils::MakeMaker;
 
 WriteMakefile(

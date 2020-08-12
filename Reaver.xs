@@ -300,7 +300,7 @@ advance_pin_count()
 void
 display_status(pin_count, start_time)
 	float pin_count
-	TIME_T start_time
+	TIME start_time
 void
 pixie_format(key, length, outbuf)
 	const unsigned char *key
@@ -469,7 +469,7 @@ wps_pbc_timeout_event(wps)
 	
 int
 wps_parse_msg(msg, attr)
-	const WPABUF *msg
+	const WPA_BUF *msg
 	WPS_PARSE_ATTR *attr
 	
 	
@@ -702,7 +702,8 @@ wpa_ft_mic(kck, sta_addr, ap_addr, transaction_seqnum, mdie, mdie_len, ftie, fti
 	const u8 *rsnie
 	size_t rsnie_len
 	const u8 *ric
-	size_t ric_len, u8 *mic
+	size_t ric_len
+	u8 *mic
 
 void
 wpa_derive_pmk_r0(xxkey, xxkey_len, ssid, ssid_len, mdid, r0kh_id, r0kh_id_len, s0kh_id, pmk_r0, pmk_r0_name)

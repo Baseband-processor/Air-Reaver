@@ -3,13 +3,25 @@ TYPEMAP
 ASSOCIATION_REQUEST_MANAGEMENT_FRAME * T_PTRREF
 AUTH_MANAGEMENT_FRAME *                T_PTRREF
 WPA_BUF *                              T_PTRREF
+const WPA_BUF *                        T_PTRREF
 WPS_REGISTRAR *                        T_PTRREF
 WPS_REGISTRAR_CONFIG *                 T_PTRREF
+const WPS_REGISTRAR_CONFIG *           T_PTRREF
 WPS_CONTEXT *                          T_PTRREF
 WPS_PARSE_ATTR *                       T_PTRREF
+WPS_ER *			       T_PTRREF
+WPS_DATA *                             T_PTRREF
 TIME                                   T_PTRREF
+WSC_OP_CODE                            T_PTRREF
+WSC_OP_CODE *                          T_PTRREF
+WPS_DEVICE_DATA *                      T_PTRREF
+WPS_PROCESS_RES                        T_PTRREF
+const WPS_DEVICE_DATA *                T_PTRREF
+LIBWPS_DATA *                          T_PTRREF
+WPA_IE_DATA *			       T_PTRREF
 
 const u8 *          T_PV
+u8 *	            T_PV
 const char *        T_PV
 const u_char *      T_PV
 u_char *            T_PV
@@ -21,6 +33,8 @@ void **             T_PV
 unsigned long int   T_U_LONG
 uint8_t             T_U_SHORT
 uint8_t *           T_U_SHORT
+uint16_t             T_U_SHORT
+uint16_t *           T_U_SHORT
 unsigned int        T_PV
 unsigned int *      T_PV
 u8                  T_U_SHORT
@@ -44,10 +58,13 @@ wchar_t *		    T_PV
 wchar_t			    T_IV
 bool_t			    T_IV
 size_t			    T_UV
+size_t *                    T_UV
 ssize_t			    T_IV
 time_t			    T_NV
 unsigned long *	T_OPAQUEPTR
 char **			    T_PACKEDARRAY
+const void *                T_PV
+void                        T_PTR
 void *			    T_PTR
 Time_t *		    T_PV
 SV *			      T_SV

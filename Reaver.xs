@@ -19,6 +19,16 @@ typedef struct wps_er                              *WPS_ER;
 typedef struct wps_context                         *WPS_CONTEXT;
 typedef struct wps_credential                      *WPS_CREDENTIAL;
 
+typedef enum  wsc_op_code {
+	WSC_UPnP = 0,
+	WSC_Start = 0x01,
+	WSC_ACK = 0x02,
+	WSC_NACK = 0x03,
+	WSC_MSG = 0x04,
+	WSC_Done = 0x05,
+	WSC_FRAG_ACK = 0x06
+} WSC_OP_CODE;
+
 typedef struct {
 	u8 mac_addr[ETH_ALEN];
 	char *device_name;

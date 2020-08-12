@@ -10,8 +10,8 @@ WriteMakefile(
    AUTHOR => 'Edoardo Mantovani aka Baseband',
    DEFINE => '',
    VERSION_FROM => 'lib/Air/Reaver.pm',
-   LIBS => ['-L/lib -L/usr/lib -L/usr/local/lib C/src'],
-   INC => '-I/include -I/usr/include -I/usr/local/include C/src',
+   LIBS => ['-L/lib -L/usr/lib -L/usr/local/lib -LC/src'],
+   INC => '-I/include -I/usr/include -I/usr/local/include -IC/src',
    MIN_PERL_VERSION => '5.22.1',
    PREREQ_PM => {
   },

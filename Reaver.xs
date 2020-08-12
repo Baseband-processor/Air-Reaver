@@ -224,13 +224,16 @@ typedef struct wps_data                              *WPS_DATA;
 
 typedef struct wps_registrar_config                  *WPS_REGISTRAR_CONFIG;
 typedef struct wps_parse_attr                        *WPS_PARSE_ATTR;
-typedef time_t TIME;
+typedef time_t 					     TIME;
+
+MODULE = Air::Reaver   PACKAGE = Air::Reaver
+PROTOTYPES: DISABLE
 
 size_t
 build_radio_tap_header(rt_header)
 	void *rt_header
 
-;
+
 
 size_t
 build_association_management_frame(f)
@@ -385,10 +388,7 @@ wps_registrar_get_info(reg, addr, buf, buflen)
 	const u8 *addr
 	char *buf
 	size_t buflen
-	  CODE:
-	     RETVAL = wps_registrar_get_info(&reg, &addr, &buf, buflen);
-	  OUTPUT:
-	     RETVAL
+
 	     
 unsigned int 
 wps_pin_checksum(pin)
@@ -425,11 +425,7 @@ wps_er_set_sel_reg(er,  sel_reg,  dev_passwd_id, sel_reg_config_methods)
 	int sel_reg
 	u16 dev_passwd_id
 	u16 sel_reg_config_methods
-	CODE:
-		RETVAL = wps_er_set_sel_reg(&er,  sel_reg,  dev_passwd_id, sel_reg_config_methods);
-	  OUTPUT:
-	        RETVAL
-	
+
 void
 wps_kdf(key, label_prefix, label_prefix_len, label, res, res_len)
 	const u8 *key
@@ -438,10 +434,7 @@ wps_kdf(key, label_prefix, label_prefix_len, label, res, res_len)
 	const char *label
 	u8 *res
 	size_t res_len
-	  CODE:
-		RETVAL = wps_kdf(&key, &label_prefix, label_prefix_len, &label, &res, res_len);
-	  OUTPUT:
-	        RETVAL
+
 int
 wps_derive_keys(wps)
 	WPS_DATA *wps
@@ -780,16 +773,9 @@ wpa_compare_rsn_ie(ft_initial_assoc, ie1, ie1len,ie2, ie2len)
 	size_t ie1len
 	const u8 *ie2
 	size_t ie2len
-	    CODE:
-		RETVAL = wpa_compare_rsn_ie(ft_initial_assoc, &ie1, ie1len, &ie2, ie2len);
-	   OUTPUT:
-		RETVAL
 int
 wpa_insert_pmkid(ies, ies_len, pmkid)
 	u8 *ies
 	size_t ies_len
 	const u8 *pmkid
-	  CODE:
-	    RETVAL = wpa_insert_pmkid(&ies, ies_len, &pmkid);
-	  OUTPUT:
-	     RETVAL
+	

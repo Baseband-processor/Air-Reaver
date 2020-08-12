@@ -10,6 +10,54 @@ use warnings;
 our $VERSION = '0.1';
 use base qw(Exporter DynaLoader);
 
+use constants {
+DEAUTH_REASON_CODE => "\x03\x00";
+   DEAUTH_REASON_CODE_SIZE => 2;
+   WPS_REGISTRAR_TAG => "\x00\x50\xF2\x04\x10\x4A\x00\x01\x10\x10\x3A\x00\x01\x02";
+   OPEN_SYSTEM => 0;
+   WFA_VENDOR_ID => "\x00\x37\x2A"; 
+   NULL_MAC => "\x00\x00\x00\x00\x00\x00";
+   TIMESTAMP_LEN => 8;
+   MAC_ADDR_LEN => 6;
+   SSID_TAG_NUMBER => 0;
+   RATES_TAG_NUMBER => 1;
+   CHANNEL_TAG_NUMBER => 3;
+   WPA_IE_ID => "\x00\x50\xF2\x01\x01\x00";
+   WPA_IE_ID_LEN => 6;
+   EAPOL_START => 1;
+   DEFAULT_DELAY => 1;
+   WPS_DEVICE_NAME => "Glau";
+   WPS_MANUFACTURER => "Microsoft";
+   WPS_MODEL_NAME => "Windows";
+   WPS_MODEL_NUMBER => "6.1.7601";
+   WPS_DEVICE_TYPE => "\x00\x01\x00\x50\xF2\x04\x00\x01";
+   WPS_OS_VERSION => "\x01\x00\x06\x00";
+   DEFAULT_UUID => "\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0A\x0B\x0C\x0D\x0E\x0F";
+   WFA_REGISTRAR => "WFA-SimpleConfig-Registrar-1-0";
+   CONF_DIR => "/etc/reaver";
+   CONF_EXT => "wpc";
+   BELL => "\x07";
+   WPS_VENDOR_ID => "\x00\x50\xF2\x04";
+   WPS_VENDOR_ID_SIZE => 4;
+   VENDOR_ID_OFFSET => 2;
+   LENGTH_OFFSET => 1;
+   SURVEY => 0;
+   SCAN => 1;
+   YES => "Yes";
+   NO => "No;
+   NO_REPLAY_HTCAPS => 0;
+   PROBE_RESP_SIZE(rth_len) => BEACON_SIZE(rth_len);
+   FAKE_RADIO_TAP_HEADER => "\0\0\0\0";
+   TAG_SUPPORTED_RATES => "\x01\x08\x02\x04\x0b\x16\x0c\x12\x18\x24";
+   TAG_EXT_RATES => "\x32\x04\x30\x48\x60\x6c";
+   TAG_HT_CAPS => "\x2d\x1a\x72\x01\x13\xff\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x03\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00";
+   WPS_PROBE_IE => "\xdd\x09\x00\x50\xf2\x04\x10\x4a\x00\x01\x10";
+   BG_CHANNELS => 14,;
+   AN_CHANNELS => 16,;
+   C_REAVER => 0;
+   C_WASH => 1;
+}
+
 our %EXPORT_TAGS = (
    reaver => [qw(
       build_radio_tap_header
@@ -123,7 +171,10 @@ our %EXPORT_TAGS = (
       
       
     )],
+   constants => [qw(
 
+   
+   )],
 );
 
 our @EXPORT = (

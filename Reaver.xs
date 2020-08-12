@@ -4,6 +4,7 @@
 #include "XSUB.h"
 
 #include "C/src/wps/wps.h"
+#include "C/src/wps/wps_defs.h"
 #include "C/src/wps/wps_i.h"
 #include "C/src/wps/wps_dev_attr.h"
 #include "C/src/libwps/libwps.h"
@@ -18,6 +19,24 @@
 typedef struct wps_er                              *WPS_ER;
 typedef struct wps_context                         *WPS_CONTEXT;
 typedef struct wps_credential                      *WPS_CREDENTIAL;
+
+typedef enum wps_msg_type {
+	WPS_Beacon = 0x01,
+	WPS_ProbeRequest = 0x02,
+	WPS_ProbeResponse = 0x03,
+	WPS_M1 = 0x04,
+	WPS_M2 = 0x05,
+	WPS_M2D = 0x06,
+	WPS_M3 = 0x07,
+	WPS_M4 = 0x08,
+	WPS_M5 = 0x09,
+	WPS_M6 = 0x0a,
+	WPS_M7 = 0x0b,
+	WPS_M8 = 0x0c,
+	WPS_WSC_ACK = 0x0d,
+	WPS_WSC_NACK = 0x0e,
+	WPS_WSC_DONE = 0x0f
+}WPS_MESSAGE_TYPE;
 
 typedef enum wps_process_res{
 	WPS_DONE,

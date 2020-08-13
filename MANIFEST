@@ -1,13 +1,10 @@
 Changes
-lib/Air/Crack.pm
-t/test-consts.t
-t/test-device-init.t
-t/test-use.t
-Crack.xs
+lib/Air/Reaver.pm
+Reaver.xs
 Makefile.PL
 MANIFEST
 README
-TODO
+C.tar.gz
 typemap
 META.yml                                 Module YAML meta-data (added by MakeMaker)
 META.json                                Module JSON meta-data (added by MakeMaker)

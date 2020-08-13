@@ -11,31 +11,8 @@
 typedef struct wps_er                              *WPS_ER;
 typedef struct wps_context                         *WPS_CONTEXT;
 typedef struct wps_credential                      *WPS_CREDENTIAL;
-
-typedef enum wps_msg_type {
-	WPS_Beacon = 0x01,
-	WPS_ProbeRequest = 0x02,
-	WPS_ProbeResponse = 0x03,
-	WPS_M1 = 0x04,
-	WPS_M2 = 0x05,
-	WPS_M2D = 0x06,
-	WPS_M3 = 0x07,
-	WPS_M4 = 0x08,
-	WPS_M5 = 0x09,
-	WPS_M6 = 0x0a,
-	WPS_M7 = 0x0b,
-	WPS_M8 = 0x0c,
-	WPS_WSC_ACK = 0x0d,
-	WPS_WSC_NACK = 0x0e,
-	WPS_WSC_DONE = 0x0f
-}WPS_MESSAGE_TYPE;
-
-typedef enum wps_process_res{
-	WPS_DONE,
-	WPS_CONTINUE,
-	WPS_FAILURE,
-	WPS_PENDING
-}WPS_PROCESS_RES;
+typedef enum wps_msg_type                          WPS_MESSAGE_TYPE;
+typedef enum wps_process_res			   WPS_PROCESS_RES;
 
 typedef struct{
         uint8_t version;
@@ -57,15 +34,7 @@ typedef struct{
 }libwps_data;
 
 typedef libwps_data                          *LIBWPS_DATA;
-typedef enum  wsc_op_code {
-	WSC_UPnP = 0,
-	WSC_Start = 0x01,
-	WSC_ACK = 0x02,
-	WSC_NACK = 0x03,
-	WSC_MSG = 0x04,
-	WSC_Done = 0x05,
-	WSC_FRAG_ACK = 0x06
-} WSC_OP_CODE;
+typedef enum  wsc_op_code 		      WSC_OP_CODE;
 
 typedef struct {
 	u8 mac_addr[ETH_ALEN];

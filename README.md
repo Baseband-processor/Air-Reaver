@@ -8,9 +8,13 @@ the Air::Reaver library provide an advanced and secure way for manipulate WPS da
 
 is the same as every perl module
 
-- sudo perl Makefile.PL
-- sudo make
-- sudo make install
+```shell
+ sudo perl Makefile.PL
+ sudo make
+ sudo make test
+ sudo make install
+
+```
 
 but executing the first program will automatically unpack the modified Reaver library, which will install its header files under */usr/include*.
 for now there are no tests, they will be added in future.

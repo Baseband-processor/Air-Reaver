@@ -4,6 +4,13 @@
 #include "XSUB.h"
 
 #define TIMESTAMP_LEN           8
+#define LIBWPS_MAX_STR_LEN 256
+#define WPS_UUID_LEN 16
+#define LISTEN_INTERVAL         0x0064
+
+
+#define end_htole16(x) (uint16_t)(x)
+
 
 #include "Ctxs.h"
 
@@ -186,12 +193,41 @@ PROTOTYPES: DISABLE
 size_t
 build_radio_tap_header(rt_header)
 	void *rt_header
+CODE:
+	#define RADIOTAP_HEADER_LENGTH \
+	"\x0c\0"
+	#define RADIOTAP_HEADER_PRESENT_FLAGS \
+	"\x04\x80\0\0" 
+	#define RADIOTAP_HEADER_RATE_OPTION \
+	"\0\0" 
+#else
+	#define RADIOTAP_HEADER_LENGTH \
+	"\x0a\0" 
+	#define RADIOTAP_HEADER_PRESENT_FLAGS \
+	"\x00\x80\0\0"
+	#define RADIOTAP_HEADER_RATE_OPTION ""
+#endif
 
+	#define RADIOTAP_HEADER \
+	"\0\0"  \
+	RADIOTAP_HEADER_LENGTH \
+	RADIOTAP_HEADER_PRESENT_FLAGS \
+	RADIOTAP_HEADER_RATE_OPTION \
+	"\x18\0" 
+	memcpy(rt_header, RADIOTAP_HEADER, sizeof(RADIOTAP_HEADER)-1);
+	RETVAL = ( sizeof(RADIOTAP_HEADER) - 1 );
+OUTPUT:
+	RETVAL
+	
 
 
 size_t
 build_association_management_frame(f)
          ASSOCIATION_REQUEST_MANAGEMENT_FRAME f
+CODE:
+	f->capability = end_htole16(get_ap_capability());
+	f->listen_interval = end_htole16(LISTEN_INTERVAL);
+	return sizeof *f;
 
 size_t
 build_authentication_management_frame(f)

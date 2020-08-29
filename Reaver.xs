@@ -14,7 +14,7 @@ typedef struct wps_credential                      *WPS_CREDENTIAL;
 typedef enum wps_msg_type                          WPS_MESSAGE_TYPE;
 typedef enum wps_process_res			   WPS_PROCESS_RES;
 
-typedef struct{
+typedef struct libwps_data{
         uint8_t version;
         uint8_t state;
         uint8_t locked;
@@ -31,12 +31,11 @@ typedef struct{
         char config_methods[LIBWPS_MAX_STR_LEN];
         char rf_bands[LIBWPS_MAX_STR_LEN];
         char os_version[LIBWPS_MAX_STR_LEN];
-}libwps_data;
+}LIBWPS_DATA;
 
-typedef libwps_data                          *LIBWPS_DATA;
 typedef enum  wsc_op_code 		      WSC_OP_CODE;
 
-typedef struct {
+typedef struct wps_device_data{
 	u8 mac_addr[ETH_ALEN];
 	char *device_name;
 	char *manufacturer;
@@ -46,11 +45,9 @@ typedef struct {
 	u8 pri_dev_type[WPS_DEV_TYPE_LEN];
 	u32 os_version;
 	u8 rf_bands;
-}wps_device_data;	
+}WPS_DEVICE_DATA;	
 		
-typedef struct wps_device_data                    *WPS_DEVICE_DATA;
-
-typedef struct {
+typedef struct wpa_ie_data{
 	int proto;
 	int pairwise_cipher;
 	int group_cipher;
@@ -59,54 +56,47 @@ typedef struct {
 	size_t num_pmkid;
 	const u8 *pmkid;
 	int mgmt_group_cipher;
-}wpa_ie_data;
+}WPA_IE_DATA;
 
-typedef struct wpa_ie_data		            *WPA_IE_DATA;
-
-typedef struct{
+typedef struct authentication_management_frame{
 	le16 algorithm;
 	le16 sequence;
 	le16 status;
-}authentication_management_frame;
+}AUTH_MANAGEMENT_FRAME;
 
-typedef struct authentication_management_frame       *AUTH_MANAGEMENT_FRAME;
 
-typedef struct {
+typedef struct association_request_management_frame{
 	le16 capability;
 	le16 listen_interval;
-}association_request_management_frame;
+}ASSOCIATION_REQUEST_MANAGEMENT_FRAME;
 
-typedef struct association_request_management_frame  *ASSOCIATION_REQUEST_MANAGEMENT_FRAME;
 
-typedef struct {
+typedef struct association_response_management_frame{
 	le16 capability;
 	le16 status;
 	le16 id;
-}association_response_management_frame;
+}ASSOCIATION_RESP_MANAGEMENT_FRAME;
 
-typedef struct association_response_management_frame  *ASSOCIATION_RESP_MANAGEMENT_FRAME;
 	
-typedef struct  {
+typedef struct  beacon_management_frame{
 	unsigned char timestamp[TIMESTAMP_LEN];
 	le16 beacon_interval;
 	le16 capability;
-}beacon_management_frame;
+}BEACON_MANAGEMENT_FRAME;
 
-typedef struct beacon_management_frame               *BEACON_MANAGEMENT_FRAME;
 
-typedef struct {
+typedef struct wps_registrar_device{
 	struct wps_registrar_device *next;
 	struct wps_device_data dev;
 	u8 uuid[WPS_UUID_LEN];
-}wps_registrar_device;
+}WPS_REGISTRAR_DEVICE;
 
-typedef struct wps_registrar_device                  *WPS_REGISTRAR_DEVICE;
 typedef struct wpa_buf                               *WPA_BUF;
 typedef struct wps_context                           *WPS_CONTEXT;
 typedef struct dl_list                               *DLLIST;
 typedef struct wps_pbc_session                       *WPS_PBC_SESSION;
 
-typedef struct  {
+typedef struct  wps_registrar{
 	WPS_CONTEXT *wps;
 	int pbc;
 	int selected_registrar;
@@ -128,12 +118,11 @@ typedef struct  {
 	int static_wep_only;
 	WPS_REGISTRAR_DEVICE *devices;
 	int force_pbc_overlap;
-}wps_registrar;
-
-typedef struct wps_registrar                         *WPS_REGISTRAR;
+}WPS_REGISTRAR;
 
 
-typedef struct  {
+
+typedef struct  wps_data{
 	WPS_CONTEXT *wps;
 	char *key;
 	char *essid;
@@ -184,9 +173,8 @@ typedef struct  {
 	void *ap_settings_cb_ctx;
 	WPS_CREDENTIAL *use_cred;
 	int use_psk_key;
-}wps_data;
+}WPS_DATA;
 
-typedef struct wps_data                              *WPS_DATA;
 
 typedef struct wps_registrar_config                  *WPS_REGISTRAR_CONFIG;
 typedef struct wps_parse_attr                        *WPS_PARSE_ATTR;

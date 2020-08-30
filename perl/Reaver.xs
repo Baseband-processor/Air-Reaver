@@ -281,7 +281,69 @@ build_eap_packet(payload, payload_length, length)
 	const void *payload
 	uint16_t payload_length
 	size_t *length
+CODE:
+	void *buf = NULL, *snap_packet = NULL, *eap_header = NULL, *dot1x_header = NULL, *wfa_header = NULL;
+	size_t buf_len = 0, snap_len = 0, eap_len = 0, dot1x_len = 0, wfa_len = 0, offset = 0, total_payload_len = 0;
+	uint8_t eap_type = 0, eap_code = 0;
+	WPS_DATA *wps = get_wps();
+
+	switch(wps->state)
+	{
+		case RECV_M1:
+			eap_code = EAP_RESPONSE;
+			eap_type = EAP_IDENTITY;
+			break;
+		default:
+			eap_code = EAP_RESPONSE;
+			eap_type = EAP_EXPANDED;
+	}
+	total_payload_len = payload_length;
+	if(eap_type == EAP_EXPANDED)
+	{
+		wfa_header = build_wfa_header(get_opcode(), &wfa_len);
+		total_payload_len += wfa_len;
+	}
+
+	snap_packet = build_snap_packet(&snap_len);
+	eap_header = build_eap_header(get_eap_id(), eap_code, eap_type, total_payload_len, &eap_len);
+	dot1x_header = build_dot1X_header(DOT1X_EAP_PACKET, (total_payload_len+eap_len), &dot1x_len);
+	if(snap_packet && eap_header && dot1x_header)
+	{
+		buf_len = snap_len + dot1x_len + eap_len + total_payload_len;
+		buf = malloc(buf_len);
+		if(buf)
+		{
+			memset((void *) buf, 0, buf_len);
+			memcpy((void *) buf, snap_packet, snap_len);
+			offset += snap_len;
+			memcpy((void *) ((char *) buf+offset), dot1x_header, dot1x_len);
+			offset += dot1x_len;
+			memcpy((void *) ((char *) buf+offset), eap_header, eap_len);
+			offset += eap_len;
 	
+			if(eap_type == EAP_EXPANDED)
+			{
+				memcpy((void *) ((char *) buf+offset), wfa_header, wfa_len);
+				offset += wfa_len;
+			}
+
+			if(payload && payload_length)
+			{
+				memcpy((void *) ((char *) buf+offset), payload, payload_length);
+			}
+
+			*len = (offset + payload_length);
+		}
+
+		free((void *) snap_packet);
+		free((void *) eap_header);
+		free((void *) dot1x_header);
+		if(wfa_header) free((void *) wfa_header);
+	}
+
+	RETVAL = buf;
+OUTPUT:
+	RETVAL
 
 void *
 build_eap_failure_packet(length)

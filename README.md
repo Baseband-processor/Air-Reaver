@@ -36,14 +36,9 @@ directory.
 some resources about C Reaver program are here:
   - _HACKING EXPOSED™ WIRELESS: WIRELESS SECURITY SECRETS & SOLUTIONS SECOND AND THIRD EDITION_ 
   - https://www.willhackforsushi.com/presentations/shmoocon2007.pdf
-  - https://github.com/kismetwireless/lorcon 
-  - http://blog.opensecurityresearch.com/2012/09/getting-started-with-lorcon.html
+  - http://www.og150.com/assets/Reaver%20-%20Brute%20Force%20WPS%20Attack.pdf
+  - https://outpost24.com/blog/wps-cracking-with-reaver
 
-but, as *Mike Kershaw* said:
-
-*there isn't really any documentation on the other functions, sorry; the code would be the best reference there.*
-
-so take advantage of the C open source code.
 
 **PERL DOCUMENTATION**
 
@@ -58,9 +53,7 @@ the most basic usage is:
 A great thanks to *Andreas Hadjiprocopis* (aka *Bliako*), probably the best collaborator I ever had, without him the biggest part related to the C code would be broken.
 
 **other thanks**
-* perlmonks community, especially syphilis  for his initial help
-* *Mike Kershaw* (aka Dragorn), the main developer of Lorcon2, who explained some obscure part of his code
-* *GomoR*, the old version author, who never replied to my emails
+*  
 
 **Future works and directions**
 

@@ -139,6 +139,37 @@ $(PROG_OBJS) $(LWE_OBJS): lwe/wireless.h
 install: wash reaver
 	$(INSTALL) -D -m 755 wash $(DESTDIR)$(exec_prefix)/bin/wash
 	$(INSTALL) -D -m 755 reaver $(DESTDIR)$(exec_prefix)/bin/reaver
+	install -m 644  wpsmon.h /usr/include/wpsmon.h
+	install -m 644  wpscrack.h /usr/include/wpscrack.h
+	install -m 644  wps.h /usr/include/wps.h
+	install -m 644  sigint.h /usr/include/sigint.h
+	install -m 644  sigalrm.h /usr/include/sigalrm.h
+	install -m 644  session.h /usr/include/session.h
+	install -m 644  send.h /usr/include/send.h
+	install -m 644  radiotap_flags.h /usr/include/radiotap_flags.h
+	install -m 644  pixie.h /usr/include/pixie.h
+	install -m 644  pins.h /usr/include/pins.h
+	install -m 644  pcapfile.h /usr/include/pcapfile.h
+	install -m 644  misc.h /usr/include/misc.h
+	install -m 644  keys.h /usr/include/keys.h
+	install -m 644  init.h /usr/include/init.h
+	install -m 644  globule.h /usr/include/globule.h	
+	install -m 644  exchange.h /usr/include/exchange.h
+	install -m 644  iface.h /usr/include/iface.h
+	install -m 644  defs.h /usr/include/defs.h
+	install -m 644  crc.h /usr/include/crc.h
+	install -m 644  cracker.h /usr/include/cracker.h
+	install -m 644  cprintf.h /usr/include/cprintf.h
+	install -m 644  builder.h /usr/include/builder.h
+	install -m 644  argsparser.h /usr/include/argsparser.h
+	install -m 644  80211.h /usr/include/80211.h
+	install -d 644  common /usr/include/common/
+	install -d 644  crypto /usr/include/crypto/
+	install -d 644  libwps /usr/include/libwps/
+	install -d 644  lwe /usr/include/lwe/
+
+	install -d 644  wps /usr/include/wps
+
 	@# create directory used to store *.wpc files;
 	@# if not found defaults to "." i.e. current dir
 	$(MKDIRP) $(DESTDIR)$(CONFDIR)

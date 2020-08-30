@@ -139,40 +139,43 @@ $(PROG_OBJS) $(LWE_OBJS): lwe/wireless.h
 install: wash reaver
 	install -D -m 755 wash $(DESTDIR)$(exec_prefix)/bin/wash
 	install -D -m 755 reaver $(DESTDIR)$(exec_prefix)/bin/reaver
-	install -m 644  wpsmon.h /usr/include/wpsmon.h
-	install -m 644  wpscrack.h /usr/include/wpscrack.h
-	install -m 644  wps.h /usr/include/wps.h
-	install -m 644  sigint.h /usr/include/sigint.h
-	install -m 644  sigalrm.h /usr/include/sigalrm.h
-	install -m 644  session.h /usr/include/session.h
-	install -m 644  send.h /usr/include/send.h
-	install -m 644  radiotap_flags.h /usr/include/radiotap_flags.h
-	install -m 644  pixie.h /usr/include/pixie.h
-	install -m 644  pins.h /usr/include/pins.h
-	install -m 644  pcapfile.h /usr/include/pcapfile.h
-	install -m 644  misc.h /usr/include/misc.h
-	install -m 644  keys.h /usr/include/keys.h
-	install -m 644  init.h /usr/include/init.h
-	install -m 644  globule.h /usr/include/globule.h	
-	install -m 644  exchange.h /usr/include/exchange.h
-	install -m 644  iface.h /usr/include/iface.h
-	install -m 644  defs.h /usr/include/defs.h
-	install -m 644  crc.h /usr/include/crc.h
-	install -m 644  cracker.h /usr/include/cracker.h
-	install -m 644  cprintf.h /usr/include/cprintf.h
-	install -m 644  builder.h /usr/include/builder.h
-	install -m 644  argsparser.h /usr/include/argsparser.h
-	install -m 644  80211.h /usr/include/80211.h
-	install -d /usr/include/common/
-	install common/* -t /usr/include/common/
-	install -d /usr/include/crypto/
-	install crypto/* -t  /usr/include/crypto/
-	install -d /usr/include/libwps/
-	install libwps/* -t /usr/include/libwps/
-	install -d /usr/include/lwe/
-	install lwe/* -t /usr/include/lwe/
-	install -d /usr/include/wps/
-	install wps/* -t /usr/include/wps
+	install -d /usr/include/reaver/
+	install -m 644  wpsmon.h /usr/include/reaver/wpsmon.h
+	install -m 644  wpscrack.h /usr/include/reaver/wpscrack.h
+	install -m 644  wps.h /usr/include/reaver/wps.h
+	install -m 644  sigint.h /usr/include/reaver/sigint.h
+	install -m 644  sigalrm.h /usr/include/reaver/sigalrm.h
+	install -m 644  session.h /usr/include/reaver/session.h
+	install -m 644  send.h /usr/include/reaver/send.h
+	install -m 644  radiotap_flags.h /usr/include/reaver/radiotap_flags.h
+	install -m 644  pixie.h /usr/include/reaver/pixie.h
+	install -m 644  pins.h /usr/include/reaver/pins.h
+	install -m 644  pcapfile.h /usr/include/reaver/pcapfile.h
+	install -m 644  misc.h /usr/include/reaver/misc.h
+	install -m 644  keys.h /usr/include/reaver/keys.h
+	install -m 644  init.h /usr/include/reaver/init.h
+	install -m 644  globule.h /usr/include/reaver/globule.h	
+	install -m 644  exchange.h /usr/include/reaver/exchange.h
+	install -m 644  iface.h /usr/include/reaver/iface.h
+	install -m 644  defs.h /usr/include/reaver/defs.h
+	install -m 644  crc.h /usr/include/reaver/crc.h
+	install -m 644  cracker.h /usr/include/reaver/cracker.h
+	install -m 644  cprintf.h /usr/include/reaver/cprintf.h
+	install -m 644  builder.h /usr/include/reaver/builder.h
+	install -m 644  argsparser.h /usr/include/reaver/argsparser.h
+	install -m 644  80211.h /usr/include/reaver/80211.h
+	install -d /usr/include/reaver/utils/
+	install utils/* -t /usr/include/reaver/utils/
+	install -d /usr/include/reaver/common/
+	install common/* -t /usr/include/reaver/common/
+	install -d /usr/include/reaver/crypto/
+	install crypto/* -t  /usr/include/reaver/crypto/
+	install -d /usr/include/reaver/libwps/
+	install libwps/* -t /usr/include/reaver/libwps/
+	install -d /usr/include/reaver/lwe/
+	install lwe/* -t /usr/include/reaver/lwe/
+	install -d /usr/include/reaver/wps/
+	install wps/* -t /usr/include/reaver/wps
 
 
 	@# create directory used to store *.wpc files;

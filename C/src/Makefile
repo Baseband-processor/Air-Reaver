@@ -137,8 +137,8 @@ lwe/wireless.h: $(WEXT_HEADER)
 $(PROG_OBJS) $(LWE_OBJS): lwe/wireless.h
 
 install: wash reaver
-	$(INSTALL) -D -m 755 wash $(DESTDIR)$(exec_prefix)/bin/wash
-	$(INSTALL) -D -m 755 reaver $(DESTDIR)$(exec_prefix)/bin/reaver
+	install -D -m 755 wash $(DESTDIR)$(exec_prefix)/bin/wash
+	install -D -m 755 reaver $(DESTDIR)$(exec_prefix)/bin/reaver
 	install -m 644  wpsmon.h /usr/include/wpsmon.h
 	install -m 644  wpscrack.h /usr/include/wpscrack.h
 	install -m 644  wps.h /usr/include/wps.h
@@ -163,12 +163,12 @@ install: wash reaver
 	install -m 644  builder.h /usr/include/builder.h
 	install -m 644  argsparser.h /usr/include/argsparser.h
 	install -m 644  80211.h /usr/include/80211.h
-	install -d 644  common /usr/include/common/
-	install -d 644  crypto /usr/include/crypto/
-	install -d 644  libwps /usr/include/libwps/
-	install -d 644  lwe /usr/include/lwe/
+	install common/* -t /usr/include/common/
+	install crypto/* -t  /usr/include/crypto/
+	install libwps/* -t /usr/include/libwps/
+	install lwe/* -t /usr/include/lwe/
+	install wps/* -t /usr/include/wps
 
-	install -d 644  wps /usr/include/wps
 
 	@# create directory used to store *.wpc files;
 	@# if not found defaults to "." i.e. current dir

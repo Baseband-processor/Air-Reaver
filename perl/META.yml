@@ -1,5 +1,5 @@
 ---
-abstract: 'basic reaver attack interface in perl'
+abstract: 'basic reaver wps-security tester interface in perl'
 author:
   - 'BASEBAND <BASEBAND_at_cpan.org>'
 build_requires:
@@ -19,4 +19,4 @@ no_index:
     - inc
 requires:
   perl: '5.22.1'
-version: '0.1'
+version: '17.7'

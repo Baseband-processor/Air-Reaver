@@ -11,6 +11,15 @@
 
 #define end_htole16(x) (uint16_t)(x)
 
+#define DOT1X_EAP_PACKET	0x00
+#define EAP_IDENTITY 		0x01
+#define EAP_EXPANDED            0xFE
+#define RADIOTAP_HEADER         "\0\0"
+
+#define EAP_REQUEST  1
+#define	EAP_RESPONSE 2
+#define	EAP_SUCCESS  3
+#define	EAP_FAILURE  4
 
 #include "Ctxs.h"
 
@@ -21,7 +30,7 @@ typedef struct wps_credential                      *WPS_CREDENTIAL;
 typedef enum wps_msg_type                          WPS_MESSAGE_TYPE;
 typedef enum wps_process_res			   WPS_PROCESS_RES;
 
-typedef struct libwps_data{
+typedef struct {
         uint8_t version;
         uint8_t state;
         uint8_t locked;
@@ -38,11 +47,12 @@ typedef struct libwps_data{
         char config_methods[LIBWPS_MAX_STR_LEN];
         char rf_bands[LIBWPS_MAX_STR_LEN];
         char os_version[LIBWPS_MAX_STR_LEN];
-}LIBWPS_DATA;
+}libwps_data;
 
+typedef struct libwps_data                    LIBWPS_DATA;
 typedef enum  wsc_op_code 		      WSC_OP_CODE;
 
-typedef struct wps_device_data{
+typedef struct {
 	u8 mac_addr[ETH_ALEN];
 	char *device_name;
 	char *manufacturer;
@@ -52,9 +62,11 @@ typedef struct wps_device_data{
 	u8 pri_dev_type[WPS_DEV_TYPE_LEN];
 	u32 os_version;
 	u8 rf_bands;
-}WPS_DEVICE_DATA;	
-		
-typedef struct wpa_ie_data{
+}wps_device_data;	
+	
+typedef struct wps_device_data WPS_DEVICE_DATA;	
+
+typedef struct {
 	int proto;
 	int pairwise_cipher;
 	int group_cipher;
@@ -63,7 +75,9 @@ typedef struct wpa_ie_data{
 	size_t num_pmkid;
 	const u8 *pmkid;
 	int mgmt_group_cipher;
-}WPA_IE_DATA;
+}wpa_ie_data;
+
+typedef struct wpa_ie_data        WPA_IE_DATA;
 
 typedef struct authentication_management_frame{
 	le16 algorithm;
@@ -200,14 +214,11 @@ CODE:
 	"\x04\x80\0\0" 
 	#define RADIOTAP_HEADER_RATE_OPTION \
 	"\0\0" 
-#else
 	#define RADIOTAP_HEADER_LENGTH \
 	"\x0a\0" 
 	#define RADIOTAP_HEADER_PRESENT_FLAGS \
 	"\x00\x80\0\0"
 	#define RADIOTAP_HEADER_RATE_OPTION ""
-#endif
-
 	#define RADIOTAP_HEADER \
 	"\0\0"  \
 	RADIOTAP_HEADER_LENGTH \
@@ -223,15 +234,12 @@ OUTPUT:
 
 size_t
 build_association_management_frame(f)
-         ASSOCIATION_REQUEST_MANAGEMENT_FRAME f
-CODE:
-	f->capability = end_htole16(get_ap_capability());
-	f->listen_interval = end_htole16(LISTEN_INTERVAL);
-	return sizeof *f;
+         ASSOCIATION_REQUEST_MANAGEMENT_FRAME *f
+
 
 size_t
 build_authentication_management_frame(f)
-         AUTH_MANAGEMENT_FRAME f
+         AUTH_MANAGEMENT_FRAME *f
 
 size_t
 build_supported_rates_tagged_parameter(buf, buflength)
@@ -331,7 +339,7 @@ CODE:
 			{
 				memcpy((void *) ((char *) buf+offset), payload, payload_length);
 			}
-
+			int *len;
 			*len = (offset + payload_length);
 		}
 

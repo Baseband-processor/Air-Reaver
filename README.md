@@ -53,6 +53,8 @@ the most basic usage is:
 A great thanks to *Andreas Hadjiprocopis* (aka *Bliako*), probably the best collaborator I ever had, without him the biggest part related to the C code would be broken.
 
 **other thanks**
+
+
 *  
 
 **Future works and directions**

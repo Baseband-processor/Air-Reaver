@@ -1,7 +1,7 @@
 Air::Reaver
 ================================================
 
-![image of wireless_security_protocols_bg](./wireless.jpg)
+![image of reaver_bg](./reaver_bg.jpg)
 
 
 **WHO I AM?**

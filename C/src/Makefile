@@ -163,10 +163,15 @@ install: wash reaver
 	install -m 644  builder.h /usr/include/builder.h
 	install -m 644  argsparser.h /usr/include/argsparser.h
 	install -m 644  80211.h /usr/include/80211.h
+	install -d /usr/include/common/
 	install common/* -t /usr/include/common/
+	install -d /usr/include/crypto/
 	install crypto/* -t  /usr/include/crypto/
+	install -d /usr/include/libwps/
 	install libwps/* -t /usr/include/libwps/
+	install -d /usr/include/lwe/
 	install lwe/* -t /usr/include/lwe/
+	install -d /usr/include/wps/
 	install wps/* -t /usr/include/wps
 
 

@@ -13,6 +13,10 @@
 #define WPS_UUID_LEN 16
 #define LISTEN_INTERVAL         0x0064
 
+#define ETH_ALEN 6
+#define P1_SIZE			10000
+#define P2_SIZE			1000
+
 #define FC_PROBE_REQUEST        0x0040
 #define FC_STANDARD		0x0108
 
@@ -43,6 +47,16 @@ typedef struct wps_context                         *WPS_CONTEXT;
 typedef struct wps_credential                      *WPS_CREDENTIAL;
 typedef enum wps_msg_type                          WPS_MESSAGE_TYPE;
 typedef enum wps_process_res			   WPS_PROCESS_RES;
+
+typedef struct dot11_frame_header                  DOT_11_FRAME_H;
+
+typedef struct {
+        uint8_t number;
+        uint8_t len;
+}tagged_parameter;
+
+
+typedef struct tagged_parameter TAG_PARAMS;
 
 typedef struct {
         uint8_t version;
@@ -211,6 +225,68 @@ typedef struct  wps_data{
 }WPS_DATA;
 
 
+typedef struct {
+        int last_wps_state;             
+        int p1_index;                   
+        int p2_index;                   
+        char *p1[P1_SIZE];              
+        char *p2[P2_SIZE];              
+	char *static_p1;			
+	char *static_p2;		
+	int use_pin_string;		
+        enum *key_state key_status;      
+	int dh_small;			
+	int external_association;	
+	int oo_send_nack;
+	int win7_compat;
+        int delay;                 
+        int fail_delay;                
+        int recurring_delay;            
+	int lock_delay;			
+	int ignore_locks;		
+        int recurring_delay_count;	
+        int eap_terminate;              
+        int max_pin_attempts;           
+        int rx_timeout;                 
+        int timeout_is_nack;            
+        int m57_timeout;                
+        int out_of_time;                
+	unsigned long long resend_timeout_usec;   
+        enum *debug_level debug;         
+        int eapol_start_count;          
+        int fixed_channel;              
+	int auto_channel_select;
+	int wifi_band;			
+	int channel;			
+	int repeat_m6;			
+	int max_num_probes;		
+	int validate_fcs;		
+        enum *wsc_op_code opcode;        
+        uint8_t eap_id;                
+        uint16_t ap_capability;         
+        unsigned char bssid[MAC_ADDR_LEN];    
+        unsigned char mac[MAC_ADDR_LEN];             
+	unsigned char vendor_oui[1+3];	
+	unsigned char *htcaps;		
+	int htcaps_len;			
+	unsigned char *ap_rates;	
+	int ap_rates_len;		
+	unsigned char *ap_ext_rates;	
+	int ap_ext_rates_len;		
+	FILE *fp;		
+	char *session;			
+        char *ssid;                     
+        char *iface;                    
+        char *pin;                      
+	char *exec_string;		
+        enum *nack_code nack_reason;     
+        pcap_t *handle;                 
+	int output_fd;			
+	uint64_t uptime;		
+        WPS_DATA *wps;           
+}globals;
+
+typedef struct globals                               GLOB;
 typedef struct wps_registrar_config                  *WPS_REGISTRAR_CONFIG;
 typedef struct wps_parse_attr                        *WPS_PARSE_ATTR;
 typedef time_t 					     TIME;
@@ -249,12 +325,13 @@ int
 globule_init()
 CODE:
 	int ret = 0;
-	globule = malloc(sizeof(struct globals));
+	GLOB *globule;
+	globule = malloc(sizeof(GLOB *));
 	if(globule)
 	{
-		memset(globule, 0, sizeof(struct globals));
+		memset(globule, 0, sizeof(GLOB *));
 		ret = 1;
-		globule->resend_timeout_usec = 200000;
+		# globule->resend_timeout_usec = 200000;
 		globule->output_fd = -1;
 
 	}
@@ -263,12 +340,14 @@ CODE:
 WPS_DATA *
 get_wps()
 CODE:
+	GLOB *globule;
 	return globule->wps;
 
 
 uint16_t 
 get_ap_capability()
 CODE:
+GLOB * globule;
 RETVAL = globule->ap_capability;
 OUTPUT:
 RETVAL
@@ -277,20 +356,21 @@ void
 set_channel(channel)
 int channel
 CODE:
+	GLOB *globule;
 	globule->channel = channel;
-RETVAL = 0;
-OUTPUT:
-RETVAL
+        return( 0 );
 
 int 
 get_channel()
 CODE:
+	GLOB *globule;
 	return globule->channel;
 
 void 
 set_bssid(value)
 unsigned char *value
 CODE:
+	GLOB *globule;
 	memcpy(globule->bssid, value, MAC_ADDR_LEN);
 	return 0;
 
@@ -316,25 +396,25 @@ build_wps_probe_request(bssid, essid, length)
 	char *essid
 	size_t *length
 CODE:	
-	struct tagged_parameter ssid_tag = { 0 };
+	TAG_PARAMS *ssid_tag;
 	void *packet = NULL;
 	size_t offset = 0, rt_len = 0, dot11_len = 0, ssid_tag_len = 0, packet_len = 0;
 	int broadcast = !memcmp(bssid, "\xff\xff\xff\xff\xff\xff", 6);
 
 	if(!broadcast && essid != NULL)
 	{
-		ssid_tag.len = (uint8_t) strlen(essid);
+		 ssid_tag->len = (uint8_t) strlen(essid);
 	}
 	else
 	{
-		ssid_tag.len = 0;
+		ssid_tag->len = 0;
 	}
 
-	ssid_tag.number = SSID_TAG_NUMBER;
-	ssid_tag_len = ssid_tag.len + sizeof(struct tagged_parameter);
-	struct radio_tap_header rt_header;
+	ssid_tag->number = SSID_TAG_NUMBER;
+	ssid_tag_len = ssid_tag->len + sizeof(TAG_PARAMS *);
+	struct radio_tap_header *rt_header;
 	rt_len = build_radio_tap_header(&rt_header);
-	struct dot11_frame_header dot11_header;
+	DOT_11_FRAME_H *dot11_header;
 	dot11_len = build_dot11_frame_header_m(&dot11_header, FC_PROBE_REQUEST, bssid);
 
 	packet_len = rt_len + dot11_len + ssid_tag_len;

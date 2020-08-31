@@ -31,9 +31,9 @@ this will start the Makefile outside the C and perl directories, Reaver's Header
 directory.
 
 
-**C DOCUMENTATION**
+**C DOCUMENTATION and WPS standard**
  
-some resources about C Reaver program are here:
+some resources about C Reaver program and WPS standards are here:
   - _HACKING EXPOSED™ WIRELESS: WIRELESS SECURITY SECRETS & SOLUTIONS SECOND AND THIRD EDITION_ 
   - https://www.ccs.neu.edu/home/noubir/publications-local/SNN13.pdf
   - http://oldwww.dcs.fmph.uniba.sk/bakalarky/obhajene/getfile.php/main.pdf?id=210&fid=412&type=application%2Fpdf

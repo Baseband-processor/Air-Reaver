@@ -260,6 +260,12 @@ CODE:
 	}
 	return ret;
 
+WPS_DATA *
+get_wps()
+CODE:
+	return globule->wps;
+
+
 uint16_t 
 get_ap_capability()
 CODE:

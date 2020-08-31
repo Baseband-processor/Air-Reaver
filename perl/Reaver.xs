@@ -4,9 +4,19 @@
 #include "XSUB.h"
 
 #define TIMESTAMP_LEN           8
+#define MAC_ADDR_LEN    	6
 #define LIBWPS_MAX_STR_LEN 256
 #define WPS_UUID_LEN 16
 #define LISTEN_INTERVAL         0x0064
+
+#define FC_PROBE_REQUEST        0x0040
+#define FC_STANDARD		0x0108
+
+#define TAG_SUPPORTED_RATES "\x01\x08\x02\x04\x0b\x16\x0c\x12\x18\x24"
+#define TAG_EXT_RATES "\x32\x04\x30\x48\x60\x6c"
+#define TAG_HT_CAPS "\x2d\x1a\x72\x01\x13\xff\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x03\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+#define WPS_PROBE_IE      "\xdd\x09\x00\x50\xf2\x04\x10\x4a\x00\x01\x10"
+#define ALL_TAGS TAG_SUPPORTED_RATES TAG_EXT_RATES TAG_HT_CAPS WPS_PROBE_IE
 
 
 #define end_htole16(x) (uint16_t)(x)
@@ -231,6 +241,48 @@ OUTPUT:
 	RETVAL
 	
 
+int 
+globule_init()
+CODE:
+	int ret = 0;
+	globule = malloc(sizeof(struct globals));
+	if(globule)
+	{
+		memset(globule, 0, sizeof(struct globals));
+		ret = 1;
+		globule->resend_timeout_usec = 200000;
+		globule->output_fd = -1;
+
+	}
+	return ret;
+
+uint16_t 
+get_ap_capability()
+CODE:
+RETVAL = globule->ap_capability;
+OUTPUT:
+RETVAL
+
+void 
+set_channel(channel)
+int channel
+CODE:
+	globule->channel = channel;
+RETVAL = 0;
+OUTPUT:
+RETVAL
+
+int 
+get_channel()
+CODE:
+	return globule->channel;
+
+void 
+set_bssid(value)
+unsigned char *value
+CODE:
+	memcpy(globule->bssid, value, MAC_ADDR_LEN);
+	return 0;
 
 size_t
 build_association_management_frame(f)
@@ -241,11 +293,6 @@ size_t
 build_authentication_management_frame(f)
          AUTH_MANAGEMENT_FRAME *f
 
-size_t
-build_supported_rates_tagged_parameter(buf, buflength)
-	unsigned char *buf
-	size_t buflength
-
 
 size_t
 build_htcaps_parameter(buf, buflength)
@@ -254,10 +301,34 @@ build_htcaps_parameter(buf, buflength)
 
 
 void*
-build_wps_probe_request(bssid,essid, length)
+build_wps_probe_request(bssid, essid, length)
 	unsigned char *bssid
 	char *essid
 	size_t *length
+CODE:	
+	struct tagged_parameter ssid_tag = { 0 };
+	void *packet = NULL;
+	size_t offset = 0, rt_len = 0, dot11_len = 0, ssid_tag_len = 0, packet_len = 0;
+	int broadcast = !memcmp(bssid, "\xff\xff\xff\xff\xff\xff", 6);
+
+	if(!broadcast && essid != NULL)
+	{
+		ssid_tag.len = (uint8_t) strlen(essid);
+	}
+	else
+	{
+		ssid_tag.len = 0;
+	}
+
+	ssid_tag.number = SSID_TAG_NUMBER;
+	ssid_tag_len = ssid_tag.len + sizeof(struct tagged_parameter);
+	struct radio_tap_header rt_header;
+	rt_len = build_radio_tap_header(&rt_header);
+	struct dot11_frame_header dot11_header;
+	dot11_len = build_dot11_frame_header_m(&dot11_header, FC_PROBE_REQUEST, bssid);
+
+	packet_len = rt_len + dot11_len + ssid_tag_len;
+
 
 void *
 build_snap_packet(length)

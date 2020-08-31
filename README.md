@@ -35,10 +35,11 @@ directory.
  
 some resources about C Reaver program are here:
   - _HACKING EXPOSED™ WIRELESS: WIRELESS SECURITY SECRETS & SOLUTIONS SECOND AND THIRD EDITION_ 
-  - https://www.willhackforsushi.com/presentations/shmoocon2007.pdf
-  - http://www.og150.com/assets/Reaver%20-%20Brute%20Force%20WPS%20Attack.pdf
-  - https://outpost24.com/blog/wps-cracking-with-reaver
-
+  - https://www.ccs.neu.edu/home/noubir/publications-local/SNN13.pdf
+  - http://oldwww.dcs.fmph.uniba.sk/bakalarky/obhajene/getfile.php/main.pdf?id=210&fid=412&type=application%2Fpdf
+  - https://pdfs.semanticscholar.org/7ab6/c8f5e9f2f6ede77f8da8c4fb1ba4d74103ae.pdf
+  - https://core.ac.uk/download/pdf/41532612.pdf
+  - [official WPS documentation (2006) ](http://cfile28.uf.tistory.com/attach/16132E3C50FCFFCB3EC74E)
 
 **PERL DOCUMENTATION**
 

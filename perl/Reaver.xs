@@ -3,6 +3,10 @@
 #include "perl.h"
 #include "XSUB.h"
 
+#define SSID_TAG_NUMBER		0
+#define RATES_TAG_NUMBER	1
+#define CHANNEL_TAG_NUMBER	3
+
 #define TIMESTAMP_LEN           8
 #define MAC_ADDR_LEN    	6
 #define LIBWPS_MAX_STR_LEN 256

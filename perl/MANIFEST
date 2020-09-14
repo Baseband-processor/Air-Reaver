@@ -3,8 +3,8 @@ lib/Air/Reaver.pm
 Reaver.xs
 Makefile.PL
 MANIFEST
-README
-C.tar.gz
+README.md
 typemap
 META.yml                                 Module YAML meta-data (added by MakeMaker)
 META.json                                Module JSON meta-data (added by MakeMaker)
+reaver2_bg.png

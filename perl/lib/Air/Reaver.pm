@@ -1,3 +1,5 @@
+# Made by Edoardo Mantovani, 2020
+
 package Air::Reaver;
 require  v5.22.1;
 
@@ -7,7 +9,7 @@ use strict;
 use warnings;
 
 
-our $VERSION = '2.25';
+our $VERSION = '17.7';
 use base qw(Exporter DynaLoader);
 
 use constant {
@@ -46,7 +48,6 @@ DEAUTH_REASON_CODE => '\x03\x00',
    YES => "Yes",
    NO => "No",
    NO_REPLAY_HTCAPS => 0,
-   PROBE_RESP_SIZE => "BEACON_SIZE(rth_len)",
    FAKE_RADIO_TAP_HEADER => '\0\0\0\0',
    TAG_SUPPORTED_RATES => '\x01\x08\x02\x04\x0b\x16\x0c\x12\x18\x24',
    TAG_EXT_RATES => '\x32\x04\x30\x48\x60\x6c',
@@ -171,7 +172,9 @@ our %EXPORT_TAGS = (
       
       
     )],
+    
    constants => [qw(
+   
    DEAUTH_REASON_CODE
    DEAUTH_REASON_CODE_SIZE
    WPS_REGISTRAR_TAG
@@ -218,7 +221,6 @@ our %EXPORT_TAGS = (
    C_REAVER
    C_WASH
 
-   
    )],
 );
 

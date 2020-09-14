@@ -1,5 +1,5 @@
 {
-   "abstract" : "Raw wireless attack using reaver",
+   "abstract" : "basic reaver wps-security tester interface in perl",
    "author" : [
       "Edoardo Mantovani aka Baseband"
    ],
@@ -37,5 +37,5 @@
       }
    },
    "release_status" : "stable",
-   "version" : "0.1"
+   "version" : "17.7"
 }

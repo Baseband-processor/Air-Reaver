@@ -1,6 +1,8 @@
 Air::Reaver
 ==============
 
+![image of reaver2_bg](./reaver2_bg.png)
+
 the Air::Reaver library provide an advanced and secure way for manipulate WPS data for wireless security purposes, this is one of the five libraries related to wireless security in perl and it is heavily based on Reaver.
 
 

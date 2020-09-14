@@ -3,14 +3,41 @@
 #include "perl.h"
 #include "XSUB.h"
 
+#define SSID_TAG_NUMBER		0
+#define RATES_TAG_NUMBER	1
+#define CHANNEL_TAG_NUMBER	3
+
 #define TIMESTAMP_LEN           8
+#define MAC_ADDR_LEN    	6
 #define LIBWPS_MAX_STR_LEN 256
 #define WPS_UUID_LEN 16
 #define LISTEN_INTERVAL         0x0064
 
+#define ETH_ALEN 6
+#define P1_SIZE			10000
+#define P2_SIZE			1000
+
+#define FC_PROBE_REQUEST        0x0040
+#define FC_STANDARD		0x0108
+
+#define TAG_SUPPORTED_RATES "\x01\x08\x02\x04\x0b\x16\x0c\x12\x18\x24"
+#define TAG_EXT_RATES "\x32\x04\x30\x48\x60\x6c"
+#define TAG_HT_CAPS "\x2d\x1a\x72\x01\x13\xff\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x03\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+#define WPS_PROBE_IE      "\xdd\x09\x00\x50\xf2\x04\x10\x4a\x00\x01\x10"
+#define ALL_TAGS TAG_SUPPORTED_RATES TAG_EXT_RATES TAG_HT_CAPS WPS_PROBE_IE
+
 
 #define end_htole16(x) (uint16_t)(x)
 
+#define DOT1X_EAP_PACKET	0x00
+#define EAP_IDENTITY 		0x01
+#define EAP_EXPANDED            0xFE
+#define RADIOTAP_HEADER         "\0\0"
+
+#define EAP_REQUEST  1
+#define	EAP_RESPONSE 2
+#define	EAP_SUCCESS  3
+#define	EAP_FAILURE  4
 
 #include "Ctxs.h"
 
@@ -21,7 +48,17 @@ typedef struct wps_credential                      *WPS_CREDENTIAL;
 typedef enum wps_msg_type                          WPS_MESSAGE_TYPE;
 typedef enum wps_process_res			   WPS_PROCESS_RES;
 
-typedef struct libwps_data{
+typedef struct dot11_frame_header                  DOT_11_FRAME_H;
+
+typedef struct {
+        uint8_t number;
+        uint8_t len;
+}tagged_parameter;
+
+
+typedef struct tagged_parameter TAG_PARAMS;
+
+typedef struct {
         uint8_t version;
         uint8_t state;
         uint8_t locked;
@@ -38,11 +75,12 @@ typedef struct libwps_data{
         char config_methods[LIBWPS_MAX_STR_LEN];
         char rf_bands[LIBWPS_MAX_STR_LEN];
         char os_version[LIBWPS_MAX_STR_LEN];
-}LIBWPS_DATA;
+}libwps_data;
 
+typedef struct libwps_data                    LIBWPS_DATA;
 typedef enum  wsc_op_code 		      WSC_OP_CODE;
 
-typedef struct wps_device_data{
+typedef struct {
 	u8 mac_addr[ETH_ALEN];
 	char *device_name;
 	char *manufacturer;
@@ -52,9 +90,11 @@ typedef struct wps_device_data{
 	u8 pri_dev_type[WPS_DEV_TYPE_LEN];
 	u32 os_version;
 	u8 rf_bands;
-}WPS_DEVICE_DATA;	
-		
-typedef struct wpa_ie_data{
+}wps_device_data;	
+	
+typedef struct wps_device_data WPS_DEVICE_DATA;	
+
+typedef struct {
 	int proto;
 	int pairwise_cipher;
 	int group_cipher;
@@ -63,7 +103,9 @@ typedef struct wpa_ie_data{
 	size_t num_pmkid;
 	const u8 *pmkid;
 	int mgmt_group_cipher;
-}WPA_IE_DATA;
+}wpa_ie_data;
+
+typedef struct wpa_ie_data        WPA_IE_DATA;
 
 typedef struct authentication_management_frame{
 	le16 algorithm;
@@ -183,6 +225,68 @@ typedef struct  wps_data{
 }WPS_DATA;
 
 
+typedef struct {
+        int last_wps_state;             
+        int p1_index;                   
+        int p2_index;                   
+        char *p1[P1_SIZE];              
+        char *p2[P2_SIZE];              
+	char *static_p1;			
+	char *static_p2;		
+	int use_pin_string;		
+        enum *key_state key_status;      
+	int dh_small;			
+	int external_association;	
+	int oo_send_nack;
+	int win7_compat;
+        int delay;                 
+        int fail_delay;                
+        int recurring_delay;            
+	int lock_delay;			
+	int ignore_locks;		
+        int recurring_delay_count;	
+        int eap_terminate;              
+        int max_pin_attempts;           
+        int rx_timeout;                 
+        int timeout_is_nack;            
+        int m57_timeout;                
+        int out_of_time;                
+	unsigned long long resend_timeout_usec;   
+        enum *debug_level debug;         
+        int eapol_start_count;          
+        int fixed_channel;              
+	int auto_channel_select;
+	int wifi_band;			
+	int channel;			
+	int repeat_m6;			
+	int max_num_probes;		
+	int validate_fcs;		
+        enum *wsc_op_code opcode;        
+        uint8_t eap_id;                
+        uint16_t ap_capability;         
+        unsigned char bssid[MAC_ADDR_LEN];    
+        unsigned char mac[MAC_ADDR_LEN];             
+	unsigned char vendor_oui[1+3];	
+	unsigned char *htcaps;		
+	int htcaps_len;			
+	unsigned char *ap_rates;	
+	int ap_rates_len;		
+	unsigned char *ap_ext_rates;	
+	int ap_ext_rates_len;		
+	FILE *fp;		
+	char *session;			
+        char *ssid;                     
+        char *iface;                    
+        char *pin;                      
+	char *exec_string;		
+        enum *nack_code nack_reason;     
+        pcap_t *handle;                 
+	int output_fd;			
+	uint64_t uptime;		
+        WPS_DATA *wps;           
+}globals;
+
+typedef struct globals                               GLOB;
 typedef struct wps_registrar_config                  *WPS_REGISTRAR_CONFIG;
 typedef struct wps_parse_attr                        *WPS_PARSE_ATTR;
 typedef time_t 					     TIME;
@@ -200,14 +304,11 @@ CODE:
 	"\x04\x80\0\0" 
 	#define RADIOTAP_HEADER_RATE_OPTION \
 	"\0\0" 
-#else
 	#define RADIOTAP_HEADER_LENGTH \
 	"\x0a\0" 
 	#define RADIOTAP_HEADER_PRESENT_FLAGS \
 	"\x00\x80\0\0"
 	#define RADIOTAP_HEADER_RATE_OPTION ""
-#endif
-
 	#define RADIOTAP_HEADER \
 	"\0\0"  \
 	RADIOTAP_HEADER_LENGTH \
@@ -220,23 +321,67 @@ OUTPUT:
 	RETVAL
 	
 
+int 
+globule_init()
+CODE:
+	int ret = 0;
+	GLOB *globule;
+	globule = malloc(sizeof(GLOB *));
+	if(globule)
+	{
+		memset(globule, 0, sizeof(GLOB *));
+		ret = 1;
+		# globule->resend_timeout_usec = 200000;
+		globule->output_fd = -1;
+
+	}
+	return ret;
+
+WPS_DATA *
+get_wps()
+CODE:
+	GLOB *globule;
+	return globule->wps;
+
+
+uint16_t 
+get_ap_capability()
+CODE:
+GLOB * globule;
+RETVAL = globule->ap_capability;
+OUTPUT:
+RETVAL
+
+void 
+set_channel(channel)
+int channel
+CODE:
+	GLOB *globule;
+	globule->channel = channel;
+        return( 0 );
+
+int 
+get_channel()
+CODE:
+	GLOB *globule;
+	return globule->channel;
+
+void 
+set_bssid(value)
+unsigned char *value
+CODE:
+	GLOB *globule;
+	memcpy(globule->bssid, value, MAC_ADDR_LEN);
+	return 0;
 
 size_t
 build_association_management_frame(f)
-         ASSOCIATION_REQUEST_MANAGEMENT_FRAME f
-CODE:
-	f->capability = end_htole16(get_ap_capability());
-	f->listen_interval = end_htole16(LISTEN_INTERVAL);
-	return sizeof *f;
+         ASSOCIATION_REQUEST_MANAGEMENT_FRAME *f
+
 
 size_t
 build_authentication_management_frame(f)
-         AUTH_MANAGEMENT_FRAME f
-
-size_t
-build_supported_rates_tagged_parameter(buf, buflength)
-	unsigned char *buf
-	size_t buflength
+         AUTH_MANAGEMENT_FRAME *f
 
 
 size_t
@@ -246,10 +391,34 @@ build_htcaps_parameter(buf, buflength)
 
 
 void*
-build_wps_probe_request(bssid,essid, length)
+build_wps_probe_request(bssid, essid, length)
 	unsigned char *bssid
 	char *essid
 	size_t *length
+CODE:	
+	TAG_PARAMS *ssid_tag;
+	void *packet = NULL;
+	size_t offset = 0, rt_len = 0, dot11_len = 0, ssid_tag_len = 0, packet_len = 0;
+	int broadcast = !memcmp(bssid, "\xff\xff\xff\xff\xff\xff", 6);
+
+	if(!broadcast && essid != NULL)
+	{
+		 ssid_tag->len = (uint8_t) strlen(essid);
+	}
+	else
+	{
+		ssid_tag->len = 0;
+	}
+
+	ssid_tag->number = SSID_TAG_NUMBER;
+	ssid_tag_len = ssid_tag->len + sizeof(TAG_PARAMS *);
+	struct radio_tap_header *rt_header;
+	rt_len = build_radio_tap_header(&rt_header);
+	DOT_11_FRAME_H *dot11_header;
+	dot11_len = build_dot11_frame_header_m(&dot11_header, FC_PROBE_REQUEST, bssid);
+
+	packet_len = rt_len + dot11_len + ssid_tag_len;
+
 
 void *
 build_snap_packet(length)
@@ -281,7 +450,69 @@ build_eap_packet(payload, payload_length, length)
 	const void *payload
 	uint16_t payload_length
 	size_t *length
+CODE:
+	void *buf = NULL, *snap_packet = NULL, *eap_header = NULL, *dot1x_header = NULL, *wfa_header = NULL;
+	size_t buf_len = 0, snap_len = 0, eap_len = 0, dot1x_len = 0, wfa_len = 0, offset = 0, total_payload_len = 0;
+	uint8_t eap_type = 0, eap_code = 0;
+	WPS_DATA *wps = get_wps();
+
+	switch(wps->state)
+	{
+		case RECV_M1:
+			eap_code = EAP_RESPONSE;
+			eap_type = EAP_IDENTITY;
+			break;
+		default:
+			eap_code = EAP_RESPONSE;
+			eap_type = EAP_EXPANDED;
+	}
+	total_payload_len = payload_length;
+	if(eap_type == EAP_EXPANDED)
+	{
+		wfa_header = build_wfa_header(get_opcode(), &wfa_len);
+		total_payload_len += wfa_len;
+	}
+
+	snap_packet = build_snap_packet(&snap_len);
+	eap_header = build_eap_header(get_eap_id(), eap_code, eap_type, total_payload_len, &eap_len);
+	dot1x_header = build_dot1X_header(DOT1X_EAP_PACKET, (total_payload_len+eap_len), &dot1x_len);
+	if(snap_packet && eap_header && dot1x_header)
+	{
+		buf_len = snap_len + dot1x_len + eap_len + total_payload_len;
+		buf = malloc(buf_len);
+		if(buf)
+		{
+			memset((void *) buf, 0, buf_len);
+			memcpy((void *) buf, snap_packet, snap_len);
+			offset += snap_len;
+			memcpy((void *) ((char *) buf+offset), dot1x_header, dot1x_len);
+			offset += dot1x_len;
+			memcpy((void *) ((char *) buf+offset), eap_header, eap_len);
+			offset += eap_len;
 	
+			if(eap_type == EAP_EXPANDED)
+			{
+				memcpy((void *) ((char *) buf+offset), wfa_header, wfa_len);
+				offset += wfa_len;
+			}
+
+			if(payload && payload_length)
+			{
+				memcpy((void *) ((char *) buf+offset), payload, payload_length);
+			}
+			int *len;
+			*len = (offset + payload_length);
+		}
+
+		free((void *) snap_packet);
+		free((void *) eap_header);
+		free((void *) dot1x_header);
+		if(wfa_header) free((void *) wfa_header);
+	}
+
+	RETVAL = buf;
+OUTPUT:
+	RETVAL
 
 void *
 build_eap_failure_packet(length)

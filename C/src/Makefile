@@ -1,4 +1,4 @@
-VERSION = 20180302
+VERSION = 20200405
 
 MAJOR = 2
 MINOR = 0
@@ -13,7 +13,7 @@ datarootdir = @datarootdir@
 ETC	= ${DESTDIR}@sysconfdir@
 BIN	= ${DESTDIR}@bindir@
 DATAROOT = ${DESTDIR}@datarootdir@
-SHARE = ${DESTDIR}@datadir@/lorcon/
+SHARE = ${DESTDIR}@datadir@/reaver/
 MAN = ${DESTDIR}@mandir@
 LIB = ${DESTDIR}@libdir@
 INCLUDE = ${DESTDIR}@includedir@
@@ -52,13 +52,13 @@ $(LIBOUT):	$(LIBOBJ)
 					  -rpath $(LIB) -release $(MAJOR).$(MINOR).$(TINY)
 
 $(TXTESTOUT):	$(TXTESTOBJ)
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $(TXTESTOUT) $(TXTESTOBJ) $(LIBS) -lorcon2
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $(TXTESTOUT) $(TXTESTOBJ) $(LIBS) -reaver
 
 $(TXTUNOUT):	$(TXTUNOBJ)
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $(TXTUNOUT) $(TXTUNOBJ) $(LIBS) -lorcon2 -lpcap
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $(TXTUNOUT) $(TXTUNOBJ) $(LIBS) -reaver 
 
 $(MCSSWEEP2OUT):	$(MCSSWEEP2OBJ)
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $(MCSSWEEP2OUT) $(MCSSWEEP2OBJ) $(LIBS) -lorcon2 
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $(MCSSWEEP2OUT) $(MCSSWEEP2OBJ) $(LIBS) -reaver 
 
 tools:	$(LIBOUT) $(TXTUNOUT) $(L2PINGOUT) $(MCSSWEEP2OUT)
 

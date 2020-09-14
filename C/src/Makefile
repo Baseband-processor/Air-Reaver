@@ -30,7 +30,7 @@ DEPEND = .depend
 
 LIBOBJ = 80211.lo builder.lo cracker.lo pixie.lo pins.lo send.lo \
 	 session.lo wpsmon.lo \
-	 wps/wps.lo libwps/libwps.lo 
+	 wps/wps.lo libwps/libwps.lo common/wpa_ctrl.lo
 	 
 LIBOUT = liblorcon2.la
 

@@ -28,9 +28,9 @@ LTCOMPILE = $(LIBTOOL) --mode=compile $(CC) $(CFLAGS)
 
 DEPEND = .depend
 
-LIBOBJ = 80211.lo builder.lo cracker.lo pixie.lo pins.lo send.lo \
+LIBOBJ = 80211.lo builder.lo cracker.lo pixie.lo pins.lo send.lo pixie.lo \
 	 session.lo wpsmon.lo \
-	 wps/wps.lo libwps/libwps.lo common/wpa_ctrl.lo
+	 wps/wps.lo libwps/libwps.lo common/wpa_ctrl.lo utils/wpa_debug.lo utils/wpabuf.lo 
 	 
 LIBOUT = liblorcon2.la
 

@@ -7,6 +7,6 @@ clean:
 	(cd $(PERL_AIR_REAVER_DIR); make clean)
 all: CT perlT
 CT:
-	(cd ./C/src && chmod 755 ./configure && ./configure --prefix=$(TMP_INSTALL_DIR)  && make && make install)
+	(cd ./C/ && sudo chmod 755 ./configure && sudo ./configure --prefix=$(TMP_INSTALL_DIR)  && sudo make && sudo make install)
 perlT:
-	(cd ./$(PERL_AIR_REAVER_DIR) && sudo perl Makefile.PL  && make && make test && make install )
+	(cd ./$(PERL_AIR_REAVER_DIR) && sudo perl Makefile.PL  && sudo make && sudo make test && sudo make install )

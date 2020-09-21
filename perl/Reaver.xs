@@ -17,6 +17,15 @@
 #define P1_SIZE			10000
 #define P2_SIZE			1000
 
+#define WPA_CIPHER_NONE BIT(0)
+#define WPA_CIPHER_WEP40 BIT(1)
+#define WPA_CIPHER_WEP104 BIT(2)
+#define WPA_CIPHER_TKIP BIT(3)
+#define WPA_CIPHER_CCMP BIT(4)
+#ifdef CONFIG_IEEE80211W
+#define WPA_CIPHER_AES_128_CMAC BIT(5)
+#endif /* CONFIG_IEEE80211W */
+
 #define FC_PROBE_REQUEST        0x0040
 #define FC_STANDARD		0x0108
 
@@ -1121,7 +1130,24 @@ rsn_pmkid(pmk, pmk_len, aa, spa, pmkid, use_sha256)
 const char * 
 wpa_cipher_txt(cipher)
 	int cipher
-	
+CODE:
+switch (cipher) {
+	case WPA_CIPHER_NONE:
+		return "NONE";
+	case WPA_CIPHER_WEP40:
+		return "WEP-40";
+	case WPA_CIPHER_WEP104:
+		return "WEP-104";
+	case WPA_CIPHER_TKIP:
+		return "TKIP";
+	case WPA_CIPHER_CCMP:
+		return "CCMP";
+	case WPA_CIPHER_CCMP | WPA_CIPHER_TKIP:
+		return "CCMP+TKIP";
+	default:
+		return "UNKNOWN";
+	}
+
 const char * 
 wpa_key_mgmt_txt(key_management, protocol)
 	int key_management

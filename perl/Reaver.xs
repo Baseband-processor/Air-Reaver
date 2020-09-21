@@ -45,6 +45,13 @@
 		pixie.KEY = 0; \
 	} while(0)
 
+#define PIXIE_SET(KEY, VALUE) \
+	do { \
+		if(pixie.KEY) free(pixie.KEY); \
+		pixie.KEY = strdup(VALUE); \
+	} while(0)
+
+
 #include "Ctxs.h"
 
 
@@ -429,6 +436,33 @@ CODE:
 void *
 build_snap_packet(length)
 	size_t *length
+CODE:
+	void *packet = NULL;
+	size_t rt_len = 0, dot11_len = 0, llc_len = 0, packet_len = 0;
+	struct radio_tap_header rt_header;
+	struct dot11_frame_header dot11_header;
+	struct llc_header llc_header;
+	rt_len = build_radio_tap_header(&rt_header);
+        dot11_len = build_dot11_frame_header(&dot11_header, FC_STANDARD);
+        llc_len = build_llc_header(&llc_header);
+
+	packet_len = rt_len + dot11_len + llc_len;
+	//packet = malloc(packet_len);
+	Newx(packet, packet_len, 1);
+	if(packet) {
+		//memset((void *) packet, 0, packet_len);
+		Zero(packet, 0, packet_len);
+		//memcpy((void *) packet, &rt_header, rt_len);
+		Copy(&rt_header, packet, rt_len, 1);
+		//memcpy((void *) ((char *) packet+rt_len), &dot11_header, dot11_len);
+		char *p = packet + rt_len;
+		Copy(&dot11_header, p, dot11_len, 1);
+		//memcpy((void *) ((char *) packet+rt_len+dot11_len), &llc_header, llc_len);
+		char *p1 = packet + rt_len + dot11_len;
+		Copy(&llc_header, p1, llc_len, 1);
+		*len = packet_len;
+	}
+	return packet;
 
 void *
 build_dot1X_header(type, payload_len, length)
@@ -488,37 +522,45 @@ CODE:
 		buf = malloc(buf_len);
 		if(buf)
 		{
-			memset((void *) buf, 0, buf_len);
-			memcpy((void *) buf, snap_packet, snap_len);
+			//memset((void *) buf, 0, buf_len);
+			Zero(buf, 1, buf_len);
+			//memcpy((void *) buf, snap_packet, snap_len);
+			Copy(snap_packet, buf, snap_len, 1);
 			offset += snap_len;
-			memcpy((void *) ((char *) buf+offset), dot1x_header, dot1x_len);
+			//memcpy((void *) ((char *) buf+offset), dot1x_header, dot1x_len);
+			char *boffset =  buf + offset;
+			Copy(dot1x_header, boffset, dot1x_len, 1);
 			offset += dot1x_len;
-			memcpy((void *) ((char *) buf+offset), eap_header, eap_len);
+			//memcpy((void *) ((char *) buf+offset), eap_header, eap_len);
+			Copy(eap_header, boffset, eap_len, 1);
 			offset += eap_len;
 	
 			if(eap_type == EAP_EXPANDED)
 			{
-				memcpy((void *) ((char *) buf+offset), wfa_header, wfa_len);
+				//memcpy((void *) ((char *) buf+offset), wfa_header, wfa_len);
+				Copy(wfa_header, boffset, wfa_len, 1);
 				offset += wfa_len;
 			}
 
 			if(payload && payload_length)
 			{
-				memcpy((void *) ((char *) buf+offset), payload, payload_length);
+				//memcpy((void *) ((char *) buf+offset), payload, payload_length);
+				Copy(payload, boffset, payload_length, 1);
 			}
 			int *len;
 			*len = (offset + payload_length);
 		}
 
-		free((void *) snap_packet);
-		free((void *) eap_header);
-		free((void *) dot1x_header);
-		if(wfa_header) free((void *) wfa_header);
+		Safefree(snap_packet);
+		Safefree(eap_header);
+		Safefree(dot1x_header);
+		if(wfa_header) {
+			Safefree((void *) wfa_header);
 	}
+	}	
+}
+		return(buf);
 
-	RETVAL = buf;
-OUTPUT:
-	RETVAL
 
 void *
 build_eap_failure_packet(length)

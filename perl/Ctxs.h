@@ -8,8 +8,7 @@
 #include <reaver/libwps/libwps.h>
 
 #include <pcap.h>
-#include <stdio.h>
-#include <string.h>
+
 
 #endif /* __CTXS_H */
 

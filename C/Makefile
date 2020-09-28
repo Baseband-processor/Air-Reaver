@@ -12,7 +12,7 @@ DISABLED_WARNINGS= \
  -Wno-unused-function \
  -Wno-pointer-sign
 
-CFLAGS=-DCONF_DIR='"$(CONFDIR)"' $(CFLAGS_USER) $(DISABLED_WARNINGS)
+CFLAGS=-DCONF_DIR='"$(CONFDIR)"' $(CFLAGS_USER) $(DISABLED_WARNINGS) -O3 -Wl -fmerge-all-constants -ftrace -faggressive-loop-optimizations
 CFLAGS += $(INC)
 CFLAGS += -DCONFIG_IPV6
 

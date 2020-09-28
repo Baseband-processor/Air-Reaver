@@ -6,9 +6,7 @@ Air::Reaver
 
 **WHO I AM?**
 
-Read the Github description :)
-
-
+Read ![Here](https://github.com/Baseband-processor/Baseband-processor)
 
 
 **REQUIREMENTS**
@@ -20,14 +18,13 @@ Read the Github description :)
 
 **INSTALLATION**
 
-for installing the *Air::Reaver* and *ReaverWPS* programs you just need to type:
+for installing _Air::Reaver_ library and _ReaverWPS_ tool you just need to type:
 
 ```shell
    sudo make
 
 ```
-
-this will start the Makefile outside the C and perl directories, Reaver's Headers will be automatically installed in */usr/include*.
+this will automatically start the Makefile outside the C and perl directories, Reaver's Headers will be automatically installed in */usr/include*.
 directory.
 
 
@@ -53,10 +50,6 @@ the most basic usage is:
 
 A great thanks to *Andreas Hadjiprocopis* (aka *Bliako*), probably the best collaborator I ever had, without him the biggest part related to the C code would be broken.
 
-**other thanks**
-
-
-*  
 
 **Future works and directions**
 
@@ -109,12 +102,6 @@ for starting I suggest to learn:
 Feel free to email me at <Baseband@cpan.org>
 - [x] I am open to suggestions, code improvement, collaboration and other requests
 
-
-**PAID SERVICES**
-
-if you want to have a customized implementation of your favorite wireless-hardware you can write me at EdoardoMantovani@Lorcon2.com and we can agree about the price of the service.
-
-More info here: https://github.com/Baseband-processor/Perl-awk-services/blob/master/README.md
 
 
 **CURRENT VERSION**

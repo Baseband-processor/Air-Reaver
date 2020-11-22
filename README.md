@@ -4,6 +4,13 @@ Air::Reaver
 ![image of reaver_bg](./reaver_bg.jpg)
 
 
+NOTE
+==================================
+
+Air::Reaver won't be updated anymore, instead see Air::Legacy which contain also Reaver functions
+
+
+
 **WHO I AM?**
 
 Read [Here](https://github.com/Baseband-processor/Baseband-processor)
